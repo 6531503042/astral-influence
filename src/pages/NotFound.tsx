@@ -12,12 +12,18 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">404</h1>
-        <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
-        <a href="/" className="text-blue-500 hover:text-blue-700 underline">
-          Return to Home
+    <div className="min-h-screen flex items-center justify-center glass-card magical-hover">
+      <div className="text-center p-12">
+        <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-6">
+          <span className="font-heading text-2xl font-bold text-primary-foreground">404</span>
+        </div>
+        <h1 className="font-heading text-4xl font-bold mb-4 text-glow">Page Not Found</h1>
+        <p className="text-xl text-muted-foreground mb-8">This mystical realm doesn't exist in our universe</p>
+        <a 
+          href="/" 
+          className="inline-flex items-center justify-center h-12 px-8 rounded-lg bg-gradient-primary text-primary-foreground font-heading font-semibold shadow-glow hover:shadow-glow hover:scale-105 border border-primary/20 transition-magical"
+        >
+          Return to Home Realm
         </a>
       </div>
     </div>
