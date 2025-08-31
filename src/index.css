@@ -2,68 +2,68 @@
 @tailwind components;
 @tailwind utilities;
 
-/* FULNFINZ FANTASY CINEMATIC DESIGN SYSTEM
-Fantasy-themed influencer marketplace with dark midnight blue, royal gold, and glassmorphism
+/* FULNFINZ PROFESSIONAL DESIGN SYSTEM
+Professional influencer marketplace with clean, modern design
 All colors are HSL format for consistent theming
 */
 
 @layer base {
   :root {
-    /* Fantasy Cinematic Color Palette */
-    --background: 225 45% 8%;          /* Deep midnight blue #0B1426 */
-    --foreground: 48 100% 95%;         /* Warm ivory #F8F6ED */
+    /* Professional Color Palette */
+    --background: 220 13% 9%;           /* Deep navy #16181D */
+    --foreground: 210 11% 96%;          /* Clean white #F4F4F5 */
     
-    /* Glass Cards with subtle transparency */
-    --card: 225 35% 12%;                /* Darker glass #141B2E */
-    --card-foreground: 48 90% 90%;      /* Soft ivory */
+    /* Clean Cards */
+    --card: 220 13% 12%;                /* Subtle dark #1C1F26 */
+    --card-foreground: 210 11% 93%;     /* Soft white */
     
     /* Popovers and floating elements */
-    --popover: 225 40% 10%;
-    --popover-foreground: 48 90% 90%;
+    --popover: 220 13% 11%;
+    --popover-foreground: 210 11% 93%;
     
-    /* Royal Gold PRIMARY - The hero color */
-    --primary: 48 85% 55%;              /* Royal gold #D4AF37 */
-    --primary-foreground: 225 45% 8%;   /* Dark text on gold */
-    --primary-glow: 48 95% 65%;         /* Brighter gold for glows */
+    /* Professional Blue PRIMARY */
+    --primary: 213 94% 68%;             /* Professional blue #4F9CF9 */
+    --primary-foreground: 220 13% 9%;   /* Dark text on blue */
+    --primary-glow: 213 94% 75%;        /* Lighter blue for subtle effects */
     
-    /* Midnight blue SECONDARY */
-    --secondary: 225 35% 15%;           /* Lighter midnight */
-    --secondary-foreground: 48 80% 85%;
+    /* Neutral SECONDARY */
+    --secondary: 220 9% 20%;            /* Neutral gray */
+    --secondary-foreground: 210 11% 90%;
     
     /* Muted colors for subtle elements */
-    --muted: 225 25% 18%;
-    --muted-foreground: 225 15% 65%;
+    --muted: 220 9% 18%;
+    --muted-foreground: 220 9% 65%;
     
-    /* Electric cyan ACCENT for highlights */
-    --accent: 180 100% 50%;             /* Electric cyan #00FFFF */
-    --accent-foreground: 225 45% 8%;
-    --accent-glow: 180 100% 60%;        /* Brighter cyan for glows */
+    /* Success green ACCENT */
+    --accent: 142 71% 45%;              /* Professional green #22C55E */
+    --accent-foreground: 220 13% 9%;
+    --accent-glow: 142 71% 50%;         /* Lighter green */
     
     /* Warning/destructive */
-    --destructive: 0 85% 60%;
-    --destructive-foreground: 48 90% 90%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 11% 93%;
     
-    /* Borders and inputs with subtle glow */
-    --border: 225 30% 20%;
-    --input: 225 35% 12%;
-    --ring: 48 85% 55%;                 /* Gold focus rings */
+    /* Borders and inputs */
+    --border: 220 13% 20%;
+    --input: 220 13% 15%;
+    --ring: 213 94% 68%;                /* Blue focus rings */
     
-    /* Border radius for fantasy feel */
-    --radius: 0.75rem;
+    /* Border radius for modern feel */
+    --radius: 0.5rem;
     
-    /* Gradients for magical effects */
-    --gradient-primary: linear-gradient(135deg, hsl(48 85% 55%), hsl(48 95% 65%));
-    --gradient-secondary: linear-gradient(135deg, hsl(225 35% 12%), hsl(225 25% 18%));
-    --gradient-accent: linear-gradient(135deg, hsl(180 100% 50%), hsl(180 100% 60%));
-    --gradient-hero: linear-gradient(135deg, hsl(225 45% 8%) 0%, hsl(225 35% 12%) 50%, hsl(225 45% 8%) 100%);
+    /* Professional gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(213 94% 68%), hsl(213 94% 75%));
+    --gradient-secondary: linear-gradient(135deg, hsl(220 13% 12%), hsl(220 9% 18%));
+    --gradient-accent: linear-gradient(135deg, hsl(142 71% 45%), hsl(142 71% 50%));
+    --gradient-hero: linear-gradient(135deg, hsl(220 13% 9%) 0%, hsl(220 13% 12%) 50%, hsl(220 13% 9%) 100%);
     
-    /* Shadows with magical glow */
-    --shadow-glow: 0 0 20px hsl(48 85% 55% / 0.3);
-    --shadow-accent-glow: 0 0 20px hsl(180 100% 50% / 0.3);
-    --shadow-card: 0 8px 32px hsl(225 45% 4% / 0.4);
+    /* Subtle shadows */
+    --shadow-glow: 0 4px 20px hsl(213 94% 68% / 0.15);
+    --shadow-accent-glow: 0 4px 20px hsl(142 71% 45% / 0.15);
+    --shadow-card: 0 4px 20px hsl(220 13% 4% / 0.3);
     
-    /* Animation transitions */
-    --transition-magical: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Smooth transitions */
+    --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
@@ -73,45 +73,23 @@ All colors are HSL format for consistent theming
   }
 
   body {
-    @apply bg-background text-foreground font-body;
-    background-image: 
-      radial-gradient(circle at 20% 50%, hsl(48 85% 55% / 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, hsl(180 100% 50% / 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 40% 80%, hsl(48 85% 55% / 0.03) 0%, transparent 50%);
+    @apply bg-background text-foreground font-sans;
   }
 }
 
 @layer components {
-  /* Glassmorphism Card Base */
-  .glass-card {
-    @apply bg-card/80 backdrop-blur-lg border border-primary/20 rounded-xl shadow-card;
-    background-image: linear-gradient(135deg, hsl(var(--card) / 0.9), hsl(var(--card) / 0.7));
+  /* Professional Card Style */
+  .card-elevated {
+    @apply bg-card border border-border rounded-lg shadow-card backdrop-blur-sm;
   }
   
-  /* Glowing Button Effects */
+  /* Subtle Hover Effects */
+  .hover-lift {
+    @apply transition-transform duration-200 hover:scale-[1.02] hover:shadow-glow;
+  }
+  
+  /* Professional Button Glow */
   .btn-glow {
-    @apply transition-all duration-300 hover:shadow-glow;
-  }
-  
-  .btn-accent-glow {
-    @apply transition-all duration-300 hover:shadow-accent-glow;
-  }
-  
-  /* Magical Hover Effects */
-  .magical-hover {
-    @apply transition-all duration-300 hover:scale-105 hover:shadow-glow;
-  }
-  
-  /* Hero Text Glow */
-  .text-glow {
-    text-shadow: 0 0 20px hsl(var(--primary) / 0.5);
-  }
-  
-  /* Parallax Background */
-  .parallax-bg {
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    @apply transition-all duration-200 hover:shadow-glow;
   }
 }

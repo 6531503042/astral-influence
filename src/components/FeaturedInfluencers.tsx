@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star, Verified, MapPin, TrendingUp } from "lucide-react";
 import { featuredInfluencers } from "@/data/influencers";
+import { Link } from "react-router-dom";
 
 export const FeaturedInfluencers = () => {
   return (
@@ -10,11 +11,11 @@ export const FeaturedInfluencers = () => {
       <div className="container mx-auto px-6">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="font-heading text-4xl md:text-5xl font-bold mb-6 text-glow">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Featured <span className="bg-gradient-primary bg-clip-text text-transparent">Influencers</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Discover top-performing influencers ready to elevate your brand to legendary status
+            Discover top-performing influencers ready to elevate your brand
           </p>
         </div>
 
@@ -23,7 +24,7 @@ export const FeaturedInfluencers = () => {
           {featuredInfluencers.map((influencer) => {
             const IconComponent = influencer.icon;
             return (
-              <Card key={influencer.id} className="glass-card magical-hover border-primary/20 overflow-hidden">
+              <Card key={influencer.id} className="card-elevated hover-lift overflow-hidden">
                 <CardContent className="p-0">
                   {/* Avatar Section */}
                   <div className="relative">
@@ -37,7 +38,7 @@ export const FeaturedInfluencers = () => {
                     {/* Verification Badge */}
                     {influencer.verified && (
                       <div className="absolute top-4 right-4">
-                        <Badge className="bg-primary/90 text-primary-foreground border-primary/20">
+                        <Badge className="bg-primary text-primary-foreground">
                           <Verified className="w-3 h-3 mr-1" />
                           Verified
                         </Badge>
@@ -45,7 +46,7 @@ export const FeaturedInfluencers = () => {
                     )}
 
                     {/* Category Icon */}
-                    <div className="absolute top-4 left-4 glass-card p-2">
+                    <div className="absolute top-4 left-4 card-elevated p-2">
                       <IconComponent className="w-5 h-5 text-primary" />
                     </div>
                   </div>
@@ -54,7 +55,7 @@ export const FeaturedInfluencers = () => {
                   <div className="p-6">
                     {/* Name and Username */}
                     <div className="mb-4">
-                      <h3 className="font-heading text-xl font-semibold mb-1">{influencer.name}</h3>
+                      <h3 className="text-xl font-semibold mb-1">{influencer.name}</h3>
                       <p className="text-muted-foreground">{influencer.username}</p>
                     </div>
 
@@ -100,15 +101,17 @@ export const FeaturedInfluencers = () => {
                     {/* Price and CTA */}
                     <div className="flex items-center justify-between">
                       <div>
-                        <div className="font-heading font-semibold text-lg text-primary">
+                        <div className="font-semibold text-lg text-primary">
                           {influencer.ratePerPost}
                         </div>
                         <div className="text-xs text-muted-foreground">per post</div>
                       </div>
-                      <Button variant="fantasy" size="sm" className="group">
-                        <TrendingUp className="w-4 h-4 group-hover:rotate-12 transition-transform" />
-                        View Profile
-                      </Button>
+                      <Link to={`/influencer/${influencer.id}`}>
+                        <Button variant="professional" size="sm" className="group">
+                          <TrendingUp className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                          View Profile
+                        </Button>
+                      </Link>
                     </div>
                   </div>
                 </CardContent>
@@ -119,9 +122,11 @@ export const FeaturedInfluencers = () => {
 
         {/* Browse All CTA */}
         <div className="text-center">
-          <Button variant="hero" size="lg">
-            Browse All Influencers
-          </Button>
+          <Link to="/browse">
+            <Button variant="default" size="lg">
+              Browse All Influencers
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

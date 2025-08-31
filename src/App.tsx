@@ -5,6 +5,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Browse from "./pages/Browse";
+import InfluencerProfile from "./pages/InfluencerProfile";
+import CampaignCreate from "./pages/CampaignCreate";
+import BrandDashboard from "./pages/BrandDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -18,7 +21,9 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/browse" element={<Browse />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/influencer/:id" element={<InfluencerProfile />} />
+          <Route path="/campaign/create" element={<CampaignCreate />} />
+          <Route path="/brand/dashboard" element={<BrandDashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -46,15 +46,15 @@ export default function Browse() {
                   placeholder="Search influencers by name or niche..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 glass-card border-primary/20"
+                  className="pl-10 card-elevated"
                 />
               </div>
               
               <Select value={selectedNiche} onValueChange={setSelectedNiche}>
-                <SelectTrigger className="w-full md:w-48 glass-card border-primary/20">
+                <SelectTrigger className="w-full md:w-48 card-elevated">
                   <SelectValue placeholder="Select niche" />
                 </SelectTrigger>
-                <SelectContent className="glass-card border-primary/20">
+                <SelectContent className="card-elevated">
                   <SelectItem value="all">All Niches</SelectItem>
                   {uniqueNiches.map(niche => (
                     <SelectItem key={niche} value={niche}>{niche}</SelectItem>
@@ -62,7 +62,7 @@ export default function Browse() {
                 </SelectContent>
               </Select>
 
-              <Button variant="fantasy" className="gap-2">
+              <Button variant="professional" className="gap-2">
                 <Filter className="w-4 h-4" />
                 More Filters
               </Button>
@@ -84,7 +84,7 @@ export default function Browse() {
               {filteredInfluencers.map((influencer) => {
                 const IconComponent = influencer.icon;
                 return (
-                  <Card key={influencer.id} className="glass-card magical-hover border-primary/20 overflow-hidden">
+                  <Card key={influencer.id} className="card-elevated hover-lift overflow-hidden">
                     <CardContent className="p-0">
                       {/* Avatar Section */}
                       <div className="relative">
@@ -106,17 +106,17 @@ export default function Browse() {
                         )}
 
                         {/* Category Icon */}
-                        <div className="absolute top-3 left-3 glass-card p-1.5">
+                        <div className="absolute top-3 left-3 card-elevated p-1.5">
                           <IconComponent className="w-4 h-4 text-primary" />
                         </div>
 
                         {/* Quick Stats Overlay */}
                         <div className="absolute bottom-3 left-3 right-3 flex justify-between items-end">
-                          <div className="flex items-center gap-1 glass-card px-2 py-1 text-xs">
+                          <div className="flex items-center gap-1 card-elevated px-2 py-1 text-xs">
                             <Users className="w-3 h-3 text-primary" />
                             <span className="font-medium">{influencer.totalFollowers}</span>
                           </div>
-                          <div className="flex items-center gap-1 glass-card px-2 py-1 text-xs">
+                          <div className="flex items-center gap-1 card-elevated px-2 py-1 text-xs">
                             <TrendingUp className="w-3 h-3 text-accent" />
                             <span className="font-medium">{influencer.averageEngagement}</span>
                           </div>
@@ -171,7 +171,7 @@ export default function Browse() {
                             </div>
                             <div className="text-xs text-muted-foreground">per post</div>
                           </div>
-                          <Button variant="fantasy" size="sm">
+                          <Button variant="professional" size="sm">
                             View Profile
                           </Button>
                         </div>
@@ -184,7 +184,7 @@ export default function Browse() {
 
             {/* Load More */}
             <div className="text-center mt-12">
-              <Button variant="glow" size="lg">
+              <Button variant="default" size="lg">
                 Load More Influencers
               </Button>
             </div>

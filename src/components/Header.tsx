@@ -1,44 +1,45 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Menu, Search, Bell, User, Sparkles } from "lucide-react";
+import { Menu, Search, Bell, User, TrendingUp } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 glass-card border-b border-primary/20">
+    <header className="fixed top-0 left-0 right-0 z-50 card-elevated border-b">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-                <Sparkles className="w-4 h-4 text-primary-foreground" />
+                <TrendingUp className="w-4 h-4 text-primary-foreground" />
               </div>
-              <span className="font-heading text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+              <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
                 Fulnfinz
               </span>
             </div>
             <Badge variant="secondary" className="hidden sm:inline-flex text-xs">
-              Beta
+              Pro
             </Badge>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            <a href="/" className="text-foreground hover:text-primary transition-colors">
+            <Link to="/" className="text-foreground hover:text-primary transition-colors">
               Home
-            </a>
-            <a href="/browse" className="text-foreground hover:text-primary transition-colors">
+            </Link>
+            <Link to="/browse" className="text-foreground hover:text-primary transition-colors">
               Browse Influencers
-            </a>
-            <a href="/campaigns" className="text-foreground hover:text-primary transition-colors">
-              Campaigns
-            </a>
-            <a href="/pricing" className="text-foreground hover:text-primary transition-colors">
-              Pricing
-            </a>
+            </Link>
+            <Link to="/campaign/create" className="text-foreground hover:text-primary transition-colors">
+              Create Campaign
+            </Link>
+            <Link to="/brand/dashboard" className="text-foreground hover:text-primary transition-colors">
+              Dashboard
+            </Link>
           </nav>
 
           {/* Desktop Actions */}
@@ -53,9 +54,11 @@ export const Header = () => {
             <Button variant="outline" size="sm">
               Sign In
             </Button>
-            <Button variant="hero" size="sm">
-              Get Started
-            </Button>
+            <Link to="/campaign/create">
+              <Button variant="default" size="sm">
+                Get Started
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -71,27 +74,29 @@ export const Header = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-primary/20">
+          <div className="md:hidden py-4 border-t border-border">
             <nav className="flex flex-col gap-4">
-              <a href="/" className="text-foreground hover:text-primary transition-colors py-2">
+              <Link to="/" className="text-foreground hover:text-primary transition-colors py-2">
                 Home
-              </a>
-              <a href="/browse" className="text-foreground hover:text-primary transition-colors py-2">
+              </Link>
+              <Link to="/browse" className="text-foreground hover:text-primary transition-colors py-2">
                 Browse Influencers
-              </a>
-              <a href="/campaigns" className="text-foreground hover:text-primary transition-colors py-2">
-                Campaigns
-              </a>
-              <a href="/pricing" className="text-foreground hover:text-primary transition-colors py-2">
-                Pricing
-              </a>
-              <div className="flex flex-col gap-2 pt-4 border-t border-primary/20">
+              </Link>
+              <Link to="/campaign/create" className="text-foreground hover:text-primary transition-colors py-2">
+                Create Campaign
+              </Link>
+              <Link to="/brand/dashboard" className="text-foreground hover:text-primary transition-colors py-2">
+                Dashboard
+              </Link>
+              <div className="flex flex-col gap-2 pt-4 border-t border-border">
                 <Button variant="outline" size="sm">
                   Sign In
                 </Button>
-                <Button variant="hero" size="sm">
-                  Get Started
-                </Button>
+                <Link to="/campaign/create">
+                  <Button variant="default" size="sm" className="w-full">
+                    Get Started
+                  </Button>
+                </Link>
               </div>
             </nav>
           </div>
