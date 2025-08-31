@@ -99,7 +99,7 @@ All colors are HSL format for consistent theming
   
   /* Magical Hover Effects */
   .magical-hover {
-    @apply transition-all duration-400 hover:scale-105 hover:shadow-glow;
+    @apply transition-all duration-300 hover:scale-105 hover:shadow-glow;
   }
   
   /* Hero Text Glow */
