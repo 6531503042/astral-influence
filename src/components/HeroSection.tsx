@@ -30,7 +30,7 @@ export const HeroSection = () => {
                 Hire an Influencer
               </Button>
             </Link>
-            <Link to="/influencer/dashboard">
+            <Link to="/influencer/signup">
               <Button variant="success" size="xl" className="group">
                 <TrendingUp className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 Become an Influencer

@@ -8,6 +8,7 @@ import Browse from "./pages/Browse";
 import InfluencerProfile from "./pages/InfluencerProfile";
 import CampaignCreate from "./pages/CampaignCreate";
 import BrandDashboard from "./pages/BrandDashboard";
+import InfluencerSignup from "./pages/InfluencerSignup";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/influencer/:id" element={<InfluencerProfile />} />
           <Route path="/campaign/create" element={<CampaignCreate />} />
           <Route path="/brand/dashboard" element={<BrandDashboard />} />
+          <Route path="/influencer/signup" element={<InfluencerSignup />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

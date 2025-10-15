@@ -34,6 +34,9 @@ export const Header = () => {
             <Link to="/browse" className="text-foreground hover:text-primary transition-colors">
               Browse Influencers
             </Link>
+            <Link to="/influencer/signup" className="text-foreground hover:text-primary transition-colors">
+              Become Influencer
+            </Link>
             <Link to="/campaign/create" className="text-foreground hover:text-primary transition-colors">
               Create Campaign
             </Link>
@@ -81,6 +84,9 @@ export const Header = () => {
               </Link>
               <Link to="/browse" className="text-foreground hover:text-primary transition-colors py-2">
                 Browse Influencers
+              </Link>
+              <Link to="/influencer/signup" className="text-foreground hover:text-primary transition-colors py-2">
+                Become Influencer
               </Link>
               <Link to="/campaign/create" className="text-foreground hover:text-primary transition-colors py-2">
                 Create Campaign
