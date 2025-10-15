@@ -3,13 +3,35 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Star, Verified, MapPin, Users, TrendingUp, MessageCircle, Heart, Share2, Instagram, Youtube, Clock } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
+import { Star, Verified, MapPin, Users, TrendingUp, MessageCircle, Heart, Share2, Instagram, Youtube, Clock, Edit, Briefcase } from "lucide-react";
 import { useParams, Link } from "react-router-dom";
 import { allInfluencers } from "@/data/influencers";
+import { useState } from "react";
 
 export default function InfluencerProfile() {
   const { id } = useParams();
+  const { toast } = useToast();
   const influencer = allInfluencers.find(inf => inf.id === id);
+  
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [editData, setEditData] = useState({
+    bio: influencer?.bio || "",
+    location: influencer?.location || "",
+    ratePerPost: influencer?.ratePerPost || "$0",
+  });
+
+  const handleSaveEdit = () => {
+    toast({
+      title: "Profile Updated",
+      description: "Your profile changes have been saved.",
+    });
+    setIsEditOpen(false);
+  };
 
   if (!influencer) {
     return (
@@ -65,7 +87,7 @@ export default function InfluencerProfile() {
                     <h1 className="text-3xl font-bold mb-2">{influencer.name}</h1>
                     <p className="text-muted-foreground mb-4">{influencer.username}</p>
                     
-                    <p className="text-lg mb-6">{influencer.bio}</p>
+                    <p className="text-lg mb-6">{editData.bio}</p>
 
                     {/* Niches */}
                     <div className="flex flex-wrap gap-2 mb-6">
@@ -80,7 +102,7 @@ export default function InfluencerProfile() {
                     <div className="flex items-center gap-6 mb-6">
                       <div className="flex items-center gap-2">
                         <MapPin className="w-4 h-4 text-muted-foreground" />
-                        <span>{influencer.location}</span>
+                        <span>{editData.location}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <Star className="w-4 h-4 text-primary fill-primary" />
@@ -90,21 +112,74 @@ export default function InfluencerProfile() {
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex gap-4">
+                    <div className="flex flex-wrap gap-4">
                       <Link to="/campaign/create">
                         <Button variant="default" size="lg">
-                          <MessageCircle className="w-4 h-4 mr-2" />
+                          <Briefcase className="w-4 h-4" />
                           Hire Now
                         </Button>
                       </Link>
                       <Button variant="outline" size="lg">
-                        <Heart className="w-4 h-4 mr-2" />
-                        Save
+                        <MessageCircle className="w-4 h-4" />
+                        Send Message
                       </Button>
                       <Button variant="outline" size="lg">
-                        <Share2 className="w-4 h-4 mr-2" />
-                        Share
+                        <Heart className="w-4 h-4" />
+                        Save
                       </Button>
+                      <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
+                        <DialogTrigger asChild>
+                          <Button variant="secondary" size="lg">
+                            <Edit className="w-4 h-4" />
+                            Edit Profile
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="max-w-xl">
+                          <DialogHeader>
+                            <DialogTitle>Edit Profile</DialogTitle>
+                          </DialogHeader>
+                          
+                          <div className="space-y-4">
+                            <div>
+                              <Label htmlFor="edit-bio">Bio</Label>
+                              <Textarea
+                                id="edit-bio"
+                                value={editData.bio}
+                                onChange={(e) => setEditData({...editData, bio: e.target.value})}
+                                rows={4}
+                              />
+                            </div>
+
+                            <div>
+                              <Label htmlFor="edit-location">Location</Label>
+                              <Input
+                                id="edit-location"
+                                value={editData.location}
+                                onChange={(e) => setEditData({...editData, location: e.target.value})}
+                              />
+                            </div>
+
+                            <div>
+                              <Label htmlFor="edit-rate">Rate per Post</Label>
+                              <Input
+                                id="edit-rate"
+                                value={editData.ratePerPost}
+                                onChange={(e) => setEditData({...editData, ratePerPost: e.target.value})}
+                                placeholder="$5,000"
+                              />
+                            </div>
+                          </div>
+
+                          <DialogFooter>
+                            <Button variant="outline" onClick={() => setIsEditOpen(false)}>
+                              Cancel
+                            </Button>
+                            <Button onClick={handleSaveEdit}>
+                              Save Changes
+                            </Button>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
                     </div>
                   </div>
                 </div>
@@ -121,7 +196,7 @@ export default function InfluencerProfile() {
                   <div className="text-sm text-muted-foreground">Avg Engagement</div>
                 </div>
                 <div className="card-elevated p-6 text-center">
-                  <div className="text-2xl font-bold text-primary mb-2">{influencer.ratePerPost}</div>
+                  <div className="text-2xl font-bold text-primary mb-2">{editData.ratePerPost}</div>
                   <div className="text-sm text-muted-foreground">Per Post</div>
                 </div>
                 <div className="card-elevated p-6 text-center">
@@ -221,7 +296,7 @@ export default function InfluencerProfile() {
                       <CardContent className="space-y-4">
                         <div className="flex justify-between items-center py-3 border-b border-border">
                           <span>Single Post</span>
-                          <span className="font-semibold text-primary">{influencer.ratePerPost}</span>
+                          <span className="font-semibold text-primary">{editData.ratePerPost}</span>
                         </div>
                         <div className="flex justify-between items-center py-3 border-b border-border">
                           <span>Story (24h)</span>

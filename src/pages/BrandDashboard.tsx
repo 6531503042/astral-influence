@@ -4,6 +4,12 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
 import { 
   Plus, 
   BarChart3, 
@@ -15,57 +21,71 @@ import {
   Eye,
   MessageCircle,
   Star,
-  DollarSign
+  DollarSign,
+  Edit,
+  Trash2
 } from "lucide-react";
 import { Link } from "react-router-dom";
-
-const campaigns = [
-  {
-    id: 1,
-    title: "Summer Fashion Collection",
-    status: "active",
-    budget: "$25,000",
-    spent: "$18,500",
-    influencers: 12,
-    applications: 47,
-    progress: 74,
-    startDate: "2024-01-15",
-    endDate: "2024-02-15"
-  },
-  {
-    id: 2,
-    title: "Tech Product Launch",
-    status: "planning",
-    budget: "$50,000",
-    spent: "$0",
-    influencers: 0,
-    applications: 23,
-    progress: 15,
-    startDate: "2024-02-01",
-    endDate: "2024-03-01"
-  },
-  {
-    id: 3,
-    title: "Holiday Special Campaign",
-    status: "completed",
-    budget: "$15,000",
-    spent: "$14,200",
-    influencers: 8,
-    applications: 31,
-    progress: 100,
-    startDate: "2023-12-01",
-    endDate: "2023-12-31"
-  }
-];
-
-const recentInfluencers = [
-  { id: 1, name: "Alex Rivera", username: "@alexgamesyt", status: "accepted", proposal: "$5,500" },
-  { id: 2, name: "Sofia Chen", username: "@sofiabeauty", status: "pending", proposal: "$8,200" },
-  { id: 3, name: "Marcus Johnson", username: "@marcusfitlife", status: "declined", proposal: "$4,800" },
-  { id: 4, name: "Emma Thompson", username: "@emmafoodie", status: "negotiating", proposal: "$3,200" }
-];
+import { useState } from "react";
 
 export default function BrandDashboard() {
+  const { toast } = useToast();
+  
+  const [campaigns, setCampaigns] = useState([
+    {
+      id: 1,
+      title: "Summer Fashion Collection",
+      description: "Launch our new summer collection with fashion influencers",
+      status: "active",
+      budget: "$25,000",
+      spent: "$18,500",
+      influencers: 12,
+      applications: 47,
+      progress: 74,
+      startDate: "2024-01-15",
+      endDate: "2024-02-15",
+      deadline: "2024-02-15"
+    },
+    {
+      id: 2,
+      title: "Tech Product Launch",
+      description: "Promote our new tech product to gaming community",
+      status: "planning",
+      budget: "$50,000",
+      spent: "$0",
+      influencers: 0,
+      applications: 23,
+      progress: 15,
+      startDate: "2024-02-01",
+      endDate: "2024-03-01",
+      deadline: "2024-03-01"
+    },
+    {
+      id: 3,
+      title: "Holiday Special Campaign",
+      description: "End of year holiday promotion",
+      status: "completed",
+      budget: "$15,000",
+      spent: "$14,200",
+      influencers: 8,
+      applications: 31,
+      progress: 100,
+      startDate: "2023-12-01",
+      endDate: "2023-12-31",
+      deadline: "2023-12-31"
+    }
+  ]);
+
+  const [editingCampaign, setEditingCampaign] = useState<any>(null);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+
+  const recentInfluencers = [
+    { id: 1, name: "Alex Rivera", username: "@alexgamesyt", status: "accepted", proposal: "$5,500" },
+    { id: 2, name: "Sofia Chen", username: "@sofiabeauty", status: "pending", proposal: "$8,200" },
+    { id: 3, name: "Marcus Johnson", username: "@marcusfitlife", status: "declined", proposal: "$4,800" },
+    { id: 4, name: "Emma Thompson", username: "@emmafoodie", status: "negotiating", proposal: "$3,200" }
+  ];
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'active': return 'bg-accent text-accent-foreground';
@@ -77,6 +97,33 @@ export default function BrandDashboard() {
       case 'negotiating': return 'bg-primary/80 text-primary-foreground';
       default: return 'bg-secondary text-secondary-foreground';
     }
+  };
+
+  const handleEdit = (campaign: any) => {
+    setEditingCampaign({ ...campaign });
+    setIsEditDialogOpen(true);
+  };
+
+  const handleSaveEdit = () => {
+    if (editingCampaign) {
+      setCampaigns(prev => 
+        prev.map(c => c.id === editingCampaign.id ? editingCampaign : c)
+      );
+      toast({
+        title: "Campaign Updated",
+        description: "Your campaign has been updated successfully.",
+      });
+      setIsEditDialogOpen(false);
+    }
+  };
+
+  const handleDelete = (id: number) => {
+    setCampaigns(prev => prev.filter(c => c.id !== id));
+    toast({
+      title: "Campaign Deleted",
+      description: "Campaign has been removed.",
+      variant: "destructive",
+    });
   };
 
   return (
@@ -172,13 +219,16 @@ export default function BrandDashboard() {
                           </Badge>
                         </div>
                         <div className="flex gap-2">
-                          <Button variant="outline" size="sm">
-                            <Eye className="w-4 h-4 mr-2" />
-                            View
+                          <Link to={`/campaign/${campaign.id}`}>
+                            <Button variant="outline" size="sm">
+                              <Eye className="w-4 h-4" />
+                            </Button>
+                          </Link>
+                          <Button variant="outline" size="sm" onClick={() => handleEdit(campaign)}>
+                            <Edit className="w-4 h-4" />
                           </Button>
-                          <Button variant="professional" size="sm">
-                            <MessageCircle className="w-4 h-4 mr-2" />
-                            Manage
+                          <Button variant="destructive" size="sm" onClick={() => handleDelete(campaign.id)}>
+                            <Trash2 className="w-4 h-4" />
                           </Button>
                         </div>
                       </div>
@@ -334,6 +384,85 @@ export default function BrandDashboard() {
           </Tabs>
         </div>
       </main>
+
+      {/* Edit Campaign Dialog */}
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Edit Campaign</DialogTitle>
+          </DialogHeader>
+          
+          {editingCampaign && (
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="edit-title">Campaign Title</Label>
+                <Input
+                  id="edit-title"
+                  value={editingCampaign.title}
+                  onChange={(e) => setEditingCampaign({...editingCampaign, title: e.target.value})}
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="edit-description">Description</Label>
+                <Textarea
+                  id="edit-description"
+                  value={editingCampaign.description}
+                  onChange={(e) => setEditingCampaign({...editingCampaign, description: e.target.value})}
+                  rows={3}
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="edit-budget">Budget</Label>
+                  <Input
+                    id="edit-budget"
+                    value={editingCampaign.budget}
+                    onChange={(e) => setEditingCampaign({...editingCampaign, budget: e.target.value})}
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="edit-status">Status</Label>
+                  <Select
+                    value={editingCampaign.status}
+                    onValueChange={(value) => setEditingCampaign({...editingCampaign, status: value})}
+                  >
+                    <SelectTrigger id="edit-status">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="active">Active</SelectItem>
+                      <SelectItem value="planning">Planning</SelectItem>
+                      <SelectItem value="completed">Completed</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="edit-deadline">Deadline</Label>
+                <Input
+                  id="edit-deadline"
+                  type="date"
+                  value={editingCampaign.deadline}
+                  onChange={(e) => setEditingCampaign({...editingCampaign, deadline: e.target.value})}
+                />
+              </div>
+            </div>
+          )}
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handleSaveEdit}>
+              Save Changes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

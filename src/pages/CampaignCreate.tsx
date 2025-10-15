@@ -9,7 +9,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Target, DollarSign, Calendar, Users, Zap } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 import React from "react";
 
 const steps = [
@@ -23,6 +24,8 @@ const platforms = ["Instagram", "YouTube", "TikTok", "Twitter", "Facebook", "Lin
 const niches = ["Gaming", "Beauty", "Fitness", "Food", "Travel", "Tech", "Fashion", "Lifestyle"];
 
 export default function CampaignCreate() {
+  const navigate = useNavigate();
+  const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
   const [selectedNiches, setSelectedNiches] = useState<string[]>([]);
@@ -360,12 +363,21 @@ export default function CampaignCreate() {
                         <ArrowRight className="w-4 h-4" />
                       </Button>
                     ) : (
-                      <Link to="/brand/dashboard">
-                        <Button variant="success" size="lg" className="gap-2">
-                          Launch Campaign
-                          <ArrowRight className="w-4 h-4" />
-                        </Button>
-                      </Link>
+                      <Button 
+                        variant="success" 
+                        size="lg" 
+                        className="gap-2"
+                        onClick={() => {
+                          toast({
+                            title: "Campaign Created!",
+                            description: "Your campaign has been created successfully.",
+                          });
+                          navigate("/brand/dashboard");
+                        }}
+                      >
+                        Launch Campaign
+                        <ArrowRight className="w-4 h-4" />
+                      </Button>
                     )}
                   </div>
                 </div>
