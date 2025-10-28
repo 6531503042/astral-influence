@@ -72,4 +72,6 @@ To connect a domain, navigate to Project > Settings > Domains and click Connect 
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
 
+## Figma Prototype
+
 Figma link Design (https://www.figma.com/design/KvAKc9L7ZjLpcK5CAInLIR/Untitled?node-id=0-1&t=L27aJxWadxJVSdTp-1)
