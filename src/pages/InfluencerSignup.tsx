@@ -145,11 +145,11 @@ const InfluencerSignup = () => {
                 <Users className="w-6 h-6 text-primary-foreground" />
               </div>
               <h1 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                สมัครเป็นอินฟลูเอนเซอร์
+                Become an Influencer
               </h1>
             </div>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              เข้าร่วมกับเครือข่ายอินฟลูเอนเซอร์ของเราและรับโอกาสในการทำงานร่วมกับแบรนด์ชั้นนำ
+              Join our influencer network and get opportunities to work with leading brands
             </p>
           </div>
 
@@ -160,26 +160,26 @@ const InfluencerSignup = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <User className="w-5 h-5" />
-                    ข้อมูลส่วนตัว
+                    Personal Information
                   </CardTitle>
                   <CardDescription>
-                    กรอกข้อมูลพื้นฐานของคุณ
+                    Fill in your basic information
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <Label htmlFor="name">ชื่อ-นามสกุล *</Label>
+                      <Label htmlFor="name">Full Name *</Label>
                       <Input
                         id="name"
                         value={formData.name}
                         onChange={(e) => handleInputChange("name", e.target.value)}
-                        placeholder="กรอกชื่อ-นามสกุล"
+                        placeholder="Enter your full name"
                         required
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="email">อีเมล *</Label>
+                      <Label htmlFor="email">Email *</Label>
                       <Input
                         id="email"
                         type="email"
@@ -190,7 +190,7 @@ const InfluencerSignup = () => {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="phone">เบอร์โทรศัพท์ *</Label>
+                      <Label htmlFor="phone">Phone Number *</Label>
                       <Input
                         id="phone"
                         value={formData.phone}
@@ -200,27 +200,27 @@ const InfluencerSignup = () => {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="location">ที่อยู่</Label>
+                      <Label htmlFor="location">Address</Label>
                       <Input
                         id="location"
                         value={formData.location}
                         onChange={(e) => handleInputChange("location", e.target.value)}
-                        placeholder="กรุงเทพฯ, ประเทศไทย"
+                        placeholder="Bangkok, Thailand"
                       />
                     </div>
                   </div>
                   
-                  <div className="space-y-2">
-                    <Label htmlFor="bio">แนะนำตัว *</Label>
-                    <Textarea
-                      id="bio"
-                      value={formData.bio}
-                      onChange={(e) => handleInputChange("bio", e.target.value)}
-                      placeholder="บอกเล่าเรื่องราวของคุณ ความสนใจ และสไตล์การสร้างคอนเทนต์..."
-                      rows={4}
-                      required
-                    />
-                  </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="bio">Bio *</Label>
+                      <Textarea
+                        id="bio"
+                        value={formData.bio}
+                        onChange={(e) => handleInputChange("bio", e.target.value)}
+                        placeholder="Tell us about your story, interests, and content creation style..."
+                        rows={4}
+                        required
+                      />
+                    </div>
                 </CardContent>
               </Card>
 
@@ -229,10 +229,10 @@ const InfluencerSignup = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <TrendingUp className="w-5 h-5" />
-                    โซเชียลมีเดีย
+                    Social Media
                   </CardTitle>
                   <CardDescription>
-                    กรอกข้อมูลโซเชียลมีเดียของคุณ
+                    Fill in your social media information
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -289,12 +289,12 @@ const InfluencerSignup = () => {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <Label htmlFor="followers">จำนวนผู้ติดตาม (รวมทุกแพลตฟอร์ม)</Label>
+                      <Label htmlFor="followers">Total Followers (All Platforms)</Label>
                       <Input
                         id="followers"
                         value={formData.followers}
                         onChange={(e) => handleInputChange("followers", e.target.value)}
-                        placeholder="เช่น 10,000"
+                        placeholder="e.g. 10,000"
                       />
                     </div>
                     <div className="space-y-2">
@@ -303,7 +303,7 @@ const InfluencerSignup = () => {
                         id="engagement"
                         value={formData.engagement}
                         onChange={(e) => handleInputChange("engagement", e.target.value)}
-                        placeholder="เช่น 3.5"
+                        placeholder="e.g. 3.5"
                       />
                     </div>
                   </div>
@@ -315,18 +315,18 @@ const InfluencerSignup = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Star className="w-5 h-5" />
-                    ประเภทคอนเทนต์และความเชี่ยวชาญ
+                    Content Type and Expertise
                   </CardTitle>
                   <CardDescription>
-                    เลือกประเภทคอนเทนต์ที่คุณเชี่ยวชาญ
+                    Select the content types you specialize in
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="space-y-2">
-                    <Label>หมวดหมู่หลัก *</Label>
+                    <Label>Main Category *</Label>
                     <Select value={formData.category} onValueChange={(value) => handleInputChange("category", value)}>
                       <SelectTrigger>
-                        <SelectValue placeholder="เลือกหมวดหมู่ที่คุณเชี่ยวชาญ" />
+                        <SelectValue placeholder="Select your expertise category" />
                       </SelectTrigger>
                       <SelectContent>
                         {categories.map((category) => (
@@ -339,7 +339,7 @@ const InfluencerSignup = () => {
                   </div>
 
                   <div className="space-y-3">
-                    <Label>ประเภทคอนเทนต์ที่คุณสร้าง</Label>
+                    <Label>Content Types You Create</Label>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                       {contentTypes.map((type) => (
                         <div key={type} className="flex items-center space-x-2">
@@ -357,7 +357,7 @@ const InfluencerSignup = () => {
                   </div>
 
                   <div className="space-y-3">
-                    <Label>ภาษาที่ใช้สร้างคอนเทนต์</Label>
+                    <Label>Languages Used for Content Creation</Label>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                       {languages.map((language) => (
                         <div key={language} className="flex items-center space-x-2">
@@ -379,50 +379,50 @@ const InfluencerSignup = () => {
               {/* Business Information */}
               <Card>
                 <CardHeader>
-                  <CardTitle>ข้อมูลธุรกิจ</CardTitle>
+                  <CardTitle>Business Information</CardTitle>
                   <CardDescription>
-                    ข้อมูลเกี่ยวกับอัตราค่าจ้างและประสบการณ์
+                    Information about rates and experience
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <Label htmlFor="rate">อัตราค่าจ้างต่อโพสต์ (บาท)</Label>
+                      <Label htmlFor="rate">Rate per Post (THB)</Label>
                       <Input
                         id="rate"
                         value={formData.rate}
                         onChange={(e) => handleInputChange("rate", e.target.value)}
-                        placeholder="เช่น 5,000"
+                        placeholder="e.g. 5,000"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="availability">ความพร้อมในการทำงาน</Label>
+                      <Label htmlFor="availability">Work Availability</Label>
                       <Select value={formData.availability} onValueChange={(value) => handleInputChange("availability", value)}>
                         <SelectTrigger>
-                          <SelectValue placeholder="เลือกความพร้อม" />
+                          <SelectValue placeholder="Select availability" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="full-time">เต็มเวลา</SelectItem>
-                          <SelectItem value="part-time">พาร์ทไทม์</SelectItem>
-                          <SelectItem value="freelance">ฟรีแลนซ์</SelectItem>
-                          <SelectItem value="weekend">เฉพาะวันหยุด</SelectItem>
+                          <SelectItem value="full-time">Full-time</SelectItem>
+                          <SelectItem value="part-time">Part-time</SelectItem>
+                          <SelectItem value="freelance">Freelance</SelectItem>
+                          <SelectItem value="weekend">Weekend Only</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                   </div>
                   
                   <div className="space-y-2">
-                    <Label htmlFor="experience">ประสบการณ์การทำงาน (ปี)</Label>
+                    <Label htmlFor="experience">Years of Experience</Label>
                     <Input
                       id="experience"
                       value={formData.experience}
                       onChange={(e) => handleInputChange("experience", e.target.value)}
-                      placeholder="เช่น 2"
+                      placeholder="e.g. 2"
                     />
                   </div>
                   
                   <div className="space-y-2">
-                    <Label htmlFor="portfolio">ลิงก์ Portfolio หรือ ผลงาน</Label>
+                    <Label htmlFor="portfolio">Portfolio or Work Link</Label>
                     <Input
                       id="portfolio"
                       value={formData.portfolio}
@@ -444,20 +444,20 @@ const InfluencerSignup = () => {
                         onCheckedChange={(checked) => handleInputChange("terms", checked)}
                       />
                       <Label htmlFor="terms" className="text-sm leading-relaxed">
-                        ฉันยอมรับ{" "}
+                        I accept the{" "}
                         <a href="#" className="text-primary hover:underline">
-                          ข้อกำหนดและเงื่อนไข
+                          Terms and Conditions
                         </a>{" "}
-                        และ{" "}
+                        and{" "}
                         <a href="#" className="text-primary hover:underline">
-                          นโยบายความเป็นส่วนตัว
+                          Privacy Policy
                         </a>{" "}
-                        ของ Fulnfinz
+                        of Fulnfinz
                       </Label>
                     </div>
                     
                     <Button type="submit" size="lg" className="w-full">
-                      สมัครเป็นอินฟลูเอนเซอร์
+                      Apply to be an Influencer
                     </Button>
                   </div>
                 </CardContent>
