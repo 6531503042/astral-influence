@@ -1,73 +1,55 @@
-# Welcome to your Lovable project
+# 💫 FulnFinz — Influencer Marketing Reimagined
 
-## Project info
+[![Lovable](https://img.shields.io/badge/Built%20with-Lovable.dev-ff69b4?logo=heart)](https://lovable.dev/projects/18da9047-ce0a-4b03-9f2d-26659c303e23)
+[![React](https://img.shields.io/badge/React-18.0-blue?logo=react)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-Fast%20Builds-orange?logo=vite)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-Ready-blueviolet?logo=tailwindcss)](https://tailwindcss.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Strict-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![shadcn/ui](https://img.shields.io/badge/UI-shadcn%2Fui-lightblue?logo=react)](https://ui.shadcn.com)
 
-**URL**: https://lovable.dev/projects/18da9047-ce0a-4b03-9f2d-26659c303e23
+---
 
-## How can I edit this code?
+## 🌟 Project Overview
 
-There are several ways of editing your application.
+**FulnFinz** is a two-sided digital marketplace that connects emerging **micro-influencers** with **businesses** for marketing campaigns.  
+The platform provides a **transparent, efficient, and affordable** alternative to traditional marketing agencies — specifically targeting the **Thai and Southeast Asian markets**.
 
-**Use Lovable**
+🔗 **Live Project:** [View on Lovable](https://lovable.dev/projects/18da9047-ce0a-4b03-9f2d-26659c303e23)  
+🎨 **Design Prototype:** [View on Figma](https://www.figma.com/design/KvAKc9L7ZjLpcK5CAInLIR/Untitled?node-id=0-1&t=L27aJxWadxJVSdTp-1)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/18da9047-ce0a-4b03-9f2d-26659c303e23) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🧩 Tech Stack
 
-**Use your preferred IDE**
+| Technology | Purpose |
+|-------------|----------|
+| **React + TypeScript** | Modern, component-driven front-end architecture |
+| **Vite** | Lightning-fast bundler for modern development |
+| **shadcn/ui** | Accessible, composable UI components |
+| **Tailwind CSS** | Utility-first CSS for rapid prototyping |
+| **Lovable.dev** | AI-assisted project generation and deployment |
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🛠️ Getting Started
 
-Follow these steps:
+### Option 1 — Edit via [Lovable.dev](https://lovable.dev/projects/18da9047-ce0a-4b03-9f2d-26659c303e23)
+Use Lovable’s built-in AI editing tools to modify, preview, and commit changes directly.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+### Option 2 — Local Development
+
+Ensure you have **Node.js** and **npm** installed.  
+(Recommended: [Install using nvm](https://github.com/nvm-sh/nvm#installing-and-updating))
+
+```bash
+# 1️⃣ Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
+# 2️⃣ Navigate into the project directory
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
-npm i
+# 3️⃣ Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# 4️⃣ Run the development server
 npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/18da9047-ce0a-4b03-9f2d-26659c303e23) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
