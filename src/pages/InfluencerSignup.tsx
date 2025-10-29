@@ -7,12 +7,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Instagram, Youtube, Music, Twitter, Facebook, Users, Star, TrendingUp, User } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { Instagram, Youtube, Music, Twitter, Facebook, Users, Star, TrendingUp, User, DollarSign, CheckCircle } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
 const InfluencerSignup = () => {
   const { toast } = useToast();
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [currentStep, setCurrentStep] = useState(1);
+  const [isAnimating, setIsAnimating] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -80,6 +84,31 @@ const InfluencerSignup = () => {
     }));
   };
 
+  const steps = [
+    { id: 1, title: "Personal Information", subtitle: "Basic profile details", icon: User, color: "from-blue-500 to-cyan-500" },
+    { id: 2, title: "Social Media", subtitle: "Your social accounts", icon: TrendingUp, color: "from-green-500 to-emerald-500" },
+    { id: 3, title: "Content & Category", subtitle: "Your expertise", icon: Star, color: "from-purple-500 to-pink-500" },
+    { id: 4, title: "Business & Submit", subtitle: "Rates and terms", icon: DollarSign, color: "from-orange-500 to-red-500" },
+  ];
+
+  const progressPercentage = (currentStep / steps.length) * 100;
+
+  const nextStep = () => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setCurrentStep(prev => Math.min(prev + 1, steps.length));
+      setIsAnimating(false);
+    }, 150);
+  };
+
+  const prevStep = () => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setCurrentStep(prev => Math.max(prev - 1, 1));
+      setIsAnimating(false);
+    }, 150);
+  };
+
   const handleArrayChange = (field: string, value: string, checked: boolean) => {
     setFormData(prev => ({
       ...prev,
@@ -89,15 +118,22 @@ const InfluencerSignup = () => {
     }));
   };
 
+  const validate = (): boolean => {
+    const nextErrors: Record<string, string> = {};
+    if (!formData.name.trim()) nextErrors.name = "Full name is required";
+    if (!formData.email.trim()) nextErrors.email = "Email is required";
+    if (!formData.phone.trim()) nextErrors.phone = "Phone number is required";
+    if (!formData.bio.trim()) nextErrors.bio = "Bio is required";
+    if (!formData.category.trim()) nextErrors.category = "Category is required";
+    if (!formData.terms) nextErrors.terms = "You must accept terms";
+    setErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!formData.terms) {
-      toast({
-        title: "กรุณายอมรับข้อกำหนด",
-        description: "คุณต้องยอมรับข้อกำหนดและเงื่อนไขก่อนสมัคร",
-        variant: "destructive",
-      });
+    if (!validate()) {
+      toast({ title: "Please fix the errors", description: "Some fields are missing or invalid", variant: "destructive" });
       return;
     }
 
@@ -130,6 +166,7 @@ const InfluencerSignup = () => {
       portfolio: "",
       terms: false,
     });
+    setErrors({});
   };
 
   return (
@@ -153,11 +190,39 @@ const InfluencerSignup = () => {
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto">
+          {/* Stepper */}
+          <div className="max-w-5xl mx-auto mb-12">
+            <div className="max-w-2xl mx-auto mb-6">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-muted-foreground">Step {currentStep} of 4</span>
+                <span className="text-sm font-medium text-primary">{Math.round((currentStep/4)*100)}% Complete</span>
+              </div>
+              <Progress value={(currentStep/4)*100} className="h-3" />
+            </div>
+            <div className="grid grid-cols-4 gap-6">
+              {[1,2,3,4].map((id) => {
+                const map = {1:{title:'Personal',icon: Users},2:{title:'Social',icon: TrendingUp},3:{title:'Content',icon: Star},4:{title:'Business',icon: DollarSign}} as const;
+                const Icon = map[id as 1|2|3|4].icon;
+                const isActive = currentStep === id;
+                const isCompleted = currentStep > id;
+                return (
+                  <div key={id} className="text-center group cursor-pointer" onClick={() => currentStep>id && setCurrentStep(id)}>
+                    <div className={`w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-3 transition-all duration-300 ${isActive ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg scale-110' : isCompleted ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-md' : 'bg-card border-2 border-border text-muted-foreground group-hover:border-primary/50 group-hover:text-primary'}`}>
+                      {isCompleted ? <CheckCircle className="w-6 h-6" /> : <Icon className="w-6 h-6" />}
+                    </div>
+                    <div className={`text-sm font-semibold ${isActive ? 'text-primary' : isCompleted ? 'text-green-600' : 'text-muted-foreground group-hover:text-primary'}`}>{map[id as 1|2|3|4].title}</div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className={`max-w-4xl mx-auto transition-all duration-300 ${isAnimating ? 'opacity-50 scale-95' : 'opacity-100 scale-100'}`}>
             <form onSubmit={handleSubmit} className="space-y-8">
               {/* Personal Information */}
-              <Card>
-                <CardHeader>
+              {currentStep === 1 && (
+              <Card className="card-elevated">
+                <CardHeader className="pb-6">
                   <CardTitle className="flex items-center gap-2">
                     <User className="w-5 h-5" />
                     Personal Information
@@ -175,8 +240,11 @@ const InfluencerSignup = () => {
                         value={formData.name}
                         onChange={(e) => handleInputChange("name", e.target.value)}
                         placeholder="Enter your full name"
+                        className={`h-12 text-base ${errors.name ? 'border-destructive focus-visible:ring-destructive' : ''}`}
+                        aria-invalid={!!errors.name}
                         required
                       />
+                      {errors.name && <p className="text-destructive text-sm">{errors.name}</p>}
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="email">Email *</Label>
@@ -186,8 +254,11 @@ const InfluencerSignup = () => {
                         value={formData.email}
                         onChange={(e) => handleInputChange("email", e.target.value)}
                         placeholder="your@email.com"
+                        className={`h-12 text-base ${errors.email ? 'border-destructive focus-visible:ring-destructive' : ''}`}
+                        aria-invalid={!!errors.email}
                         required
                       />
+                      {errors.email && <p className="text-destructive text-sm">{errors.email}</p>}
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="phone">Phone Number *</Label>
@@ -196,8 +267,11 @@ const InfluencerSignup = () => {
                         value={formData.phone}
                         onChange={(e) => handleInputChange("phone", e.target.value)}
                         placeholder="08x-xxx-xxxx"
+                        className={`h-12 text-base ${errors.phone ? 'border-destructive focus-visible:ring-destructive' : ''}`}
+                        aria-invalid={!!errors.phone}
                         required
                       />
+                      {errors.phone && <p className="text-destructive text-sm">{errors.phone}</p>}
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="location">Address</Label>
@@ -206,6 +280,7 @@ const InfluencerSignup = () => {
                         value={formData.location}
                         onChange={(e) => handleInputChange("location", e.target.value)}
                         placeholder="Bangkok, Thailand"
+                        className="h-12 text-base"
                       />
                     </div>
                   </div>
@@ -217,16 +292,20 @@ const InfluencerSignup = () => {
                         value={formData.bio}
                         onChange={(e) => handleInputChange("bio", e.target.value)}
                         placeholder="Tell us about your story, interests, and content creation style..."
-                        rows={4}
+                        className={`min-h-[140px] text-base resize-none ${errors.bio ? 'border-destructive focus-visible:ring-destructive' : ''}`}
+                        aria-invalid={!!errors.bio}
                         required
                       />
+                      {errors.bio && <p className="text-destructive text-sm">{errors.bio}</p>}
                     </div>
                 </CardContent>
               </Card>
+              )}
 
               {/* Social Media */}
-              <Card>
-                <CardHeader>
+              {currentStep === 2 && (
+              <Card className="card-elevated">
+                <CardHeader className="pb-6">
                   <CardTitle className="flex items-center gap-2">
                     <TrendingUp className="w-5 h-5" />
                     Social Media
@@ -247,6 +326,7 @@ const InfluencerSignup = () => {
                         value={formData.instagram}
                         onChange={(e) => handleInputChange("instagram", e.target.value)}
                         placeholder="@username"
+                        className="h-12 text-base"
                       />
                     </div>
                     <div className="space-y-2">
@@ -259,6 +339,7 @@ const InfluencerSignup = () => {
                         value={formData.youtube}
                         onChange={(e) => handleInputChange("youtube", e.target.value)}
                         placeholder="Channel name or URL"
+                        className="h-12 text-base"
                       />
                     </div>
                     <div className="space-y-2">
@@ -271,6 +352,7 @@ const InfluencerSignup = () => {
                         value={formData.tiktok}
                         onChange={(e) => handleInputChange("tiktok", e.target.value)}
                         placeholder="@username"
+                        className="h-12 text-base"
                       />
                     </div>
                     <div className="space-y-2">
@@ -283,6 +365,7 @@ const InfluencerSignup = () => {
                         value={formData.twitter}
                         onChange={(e) => handleInputChange("twitter", e.target.value)}
                         placeholder="@username"
+                        className="h-12 text-base"
                       />
                     </div>
                   </div>
@@ -295,6 +378,7 @@ const InfluencerSignup = () => {
                         value={formData.followers}
                         onChange={(e) => handleInputChange("followers", e.target.value)}
                         placeholder="e.g. 10,000"
+                        className="h-12 text-base"
                       />
                     </div>
                     <div className="space-y-2">
@@ -304,15 +388,18 @@ const InfluencerSignup = () => {
                         value={formData.engagement}
                         onChange={(e) => handleInputChange("engagement", e.target.value)}
                         placeholder="e.g. 3.5"
+                        className="h-12 text-base"
                       />
                     </div>
                   </div>
                 </CardContent>
               </Card>
+              )}
 
               {/* Content & Category */}
-              <Card>
-                <CardHeader>
+              {currentStep === 3 && (
+              <Card className="card-elevated">
+                <CardHeader className="pb-6">
                   <CardTitle className="flex items-center gap-2">
                     <Star className="w-5 h-5" />
                     Content Type and Expertise
@@ -325,7 +412,7 @@ const InfluencerSignup = () => {
                   <div className="space-y-2">
                     <Label>Main Category *</Label>
                     <Select value={formData.category} onValueChange={(value) => handleInputChange("category", value)}>
-                      <SelectTrigger>
+                      <SelectTrigger className={`h-12 text-base ${errors.category ? 'border-destructive focus-visible:ring-destructive' : ''}`}>
                         <SelectValue placeholder="Select your expertise category" />
                       </SelectTrigger>
                       <SelectContent>
@@ -375,10 +462,13 @@ const InfluencerSignup = () => {
                   </div>
                 </CardContent>
               </Card>
+              )}
 
               {/* Business Information */}
-              <Card>
-                <CardHeader>
+              {currentStep === 4 && (
+              <>
+              <Card className="card-elevated">
+                <CardHeader className="pb-6">
                   <CardTitle>Business Information</CardTitle>
                   <CardDescription>
                     Information about rates and experience
@@ -393,12 +483,13 @@ const InfluencerSignup = () => {
                         value={formData.rate}
                         onChange={(e) => handleInputChange("rate", e.target.value)}
                         placeholder="e.g. 5,000"
+                        className="h-12 text-base"
                       />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="availability">Work Availability</Label>
                       <Select value={formData.availability} onValueChange={(value) => handleInputChange("availability", value)}>
-                        <SelectTrigger>
+                        <SelectTrigger className="h-12 text-base">
                           <SelectValue placeholder="Select availability" />
                         </SelectTrigger>
                         <SelectContent>
@@ -418,6 +509,7 @@ const InfluencerSignup = () => {
                       value={formData.experience}
                       onChange={(e) => handleInputChange("experience", e.target.value)}
                       placeholder="e.g. 2"
+                      className="h-12 text-base"
                     />
                   </div>
                   
@@ -428,6 +520,7 @@ const InfluencerSignup = () => {
                       value={formData.portfolio}
                       onChange={(e) => handleInputChange("portfolio", e.target.value)}
                       placeholder="https://your-portfolio.com"
+                      className="h-12 text-base"
                     />
                   </div>
                 </CardContent>
@@ -455,6 +548,7 @@ const InfluencerSignup = () => {
                         of Fulnfinz
                       </Label>
                     </div>
+                    {errors.terms && <p className="text-destructive text-sm">{errors.terms}</p>}
                     
                     <Button type="submit" size="lg" className="w-full">
                       Apply to be an Influencer
@@ -462,6 +556,15 @@ const InfluencerSignup = () => {
                   </div>
                 </CardContent>
               </Card>
+              </>
+              )}
+
+              <div className="flex items-center justify-between">
+                <Button type="button" variant="outline" onClick={() => { setIsAnimating(true); setTimeout(()=>{ setCurrentStep(s=>Math.max(1,s-1)); setIsAnimating(false);},150); }} disabled={currentStep===1}>Back</Button>
+                {currentStep < 4 ? (
+                  <Button type="button" onClick={() => { setIsAnimating(true); setTimeout(()=>{ setCurrentStep(s=>Math.min(4,s+1)); setIsAnimating(false);},150); }}>Next</Button>
+                ) : null}
+              </div>
             </form>
           </div>
         </div>

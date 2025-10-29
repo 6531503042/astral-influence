@@ -1,11 +1,30 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Menu, Search, Bell, User, TrendingUp } from "lucide-react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Header = () => {
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!localStorage.getItem("auth:isLoggedIn"));
+
+  useEffect(() => {
+    const syncAuth = () => setIsLoggedIn(!!localStorage.getItem("auth:isLoggedIn"));
+    window.addEventListener("storage", syncAuth);
+    document.addEventListener("visibilitychange", syncAuth);
+    return () => {
+      window.removeEventListener("storage", syncAuth);
+      document.removeEventListener("visibilitychange", syncAuth);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("auth:isLoggedIn");
+    localStorage.removeItem("auth:username");
+    setIsLoggedIn(false);
+    navigate("/");
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 card-elevated border-b">
@@ -54,14 +73,24 @@ export const Header = () => {
               <Bell className="w-4 h-4" />
               <div className="absolute -top-1 -right-1 w-2 h-2 bg-accent rounded-full"></div>
             </Button>
-            <Button variant="outline" size="sm">
-              Sign In
-            </Button>
-            <Link to="/campaign/create">
-              <Button variant="default" size="sm">
-                Get Started
+            {!isLoggedIn ? (
+              <>
+                <Link to="/login">
+                  <Button variant="outline" size="sm">
+                    Sign In
+                  </Button>
+                </Link>
+                <Link to="/signup">
+                  <Button variant="default" size="sm">
+                    Create Account
+                  </Button>
+                </Link>
+              </>
+            ) : (
+              <Button variant="outline" size="sm" onClick={handleLogout}>
+                Logout
               </Button>
-            </Link>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -95,14 +124,24 @@ export const Header = () => {
                 Dashboard
               </Link>
               <div className="flex flex-col gap-2 pt-4 border-t border-border">
-                <Button variant="outline" size="sm">
-                  Sign In
-                </Button>
-                <Link to="/campaign/create">
-                  <Button variant="default" size="sm" className="w-full">
-                    Get Started
+                {!isLoggedIn ? (
+                  <>
+                    <Link to="/login">
+                      <Button variant="outline" size="sm" className="w-full">
+                        Sign In
+                      </Button>
+                    </Link>
+                    <Link to="/signup">
+                      <Button variant="default" size="sm" className="w-full">
+                        Create Account
+                      </Button>
+                    </Link>
+                  </>
+                ) : (
+                  <Button variant="outline" size="sm" className="w-full" onClick={handleLogout}>
+                    Logout
                   </Button>
-                </Link>
+                )}
               </div>
             </nav>
           </div>

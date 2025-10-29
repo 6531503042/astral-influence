@@ -94,6 +94,7 @@ export default function BrandDashboard() {
   ]);
 
   const [editingCampaign, setEditingCampaign] = useState<any>(null);
+  const [editErrors, setEditErrors] = useState<Record<string, string>>({});
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
   const recentInfluencers = [
@@ -125,48 +126,18 @@ export default function BrandDashboard() {
   const handleSaveEdit = () => {
     if (editingCampaign) {
       // Basic validation
-      if (!editingCampaign.title.trim()) {
-        toast({
-          title: "Validation Error",
-          description: "Campaign title is required.",
-          variant: "destructive",
-        });
-        return;
+      const nextErrors: Record<string, string> = {};
+      if (!editingCampaign.title?.trim()) nextErrors.title = "Title is required";
+      if (!editingCampaign.description?.trim()) nextErrors.description = "Description is required";
+      if (!editingCampaign.budget?.trim()) nextErrors.budget = "Budget is required";
+      if (!editingCampaign.startDate) nextErrors.startDate = "Start date is required";
+      if (!editingCampaign.endDate) nextErrors.endDate = "End date is required";
+      if (editingCampaign.startDate && editingCampaign.endDate && new Date(editingCampaign.startDate) > new Date(editingCampaign.endDate)) {
+        nextErrors.endDate = "End date must be after start date";
       }
-
-      if (!editingCampaign.description.trim()) {
-        toast({
-          title: "Validation Error",
-          description: "Campaign description is required.",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      if (!editingCampaign.budget.trim()) {
-        toast({
-          title: "Validation Error",
-          description: "Campaign budget is required.",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      if (!editingCampaign.startDate || !editingCampaign.endDate) {
-        toast({
-          title: "Validation Error",
-          description: "Start date and end date are required.",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      if (new Date(editingCampaign.startDate) > new Date(editingCampaign.endDate)) {
-        toast({
-          title: "Validation Error",
-          description: "Start date cannot be after end date.",
-          variant: "destructive",
-        });
+      setEditErrors(nextErrors);
+      if (Object.keys(nextErrors).length > 0) {
+        toast({ title: "Please fix the errors", description: "Some fields are missing or invalid", variant: "destructive" });
         return;
       }
 
@@ -180,6 +151,7 @@ export default function BrandDashboard() {
         description: `"${editingCampaign.title}" has been updated with all changes.`,
       });
       setIsEditDialogOpen(false);
+      setEditErrors({});
     }
   };
 
@@ -202,14 +174,14 @@ export default function BrandDashboard() {
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-12 gap-6">
             <div className="space-y-4">
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center">
+                <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center shadow-lg">
                   <Sparkles className="w-8 h-8 text-primary-foreground" />
                 </div>
             <div>
                   <h1 className="text-4xl lg:text-5xl font-bold bg-gradient-primary bg-clip-text text-transparent">
                     Brand Dashboard
                   </h1>
-                  <p className="text-xl text-slate-400 mt-2">
+                  <p className="text-xl text-muted-foreground mt-2">
                     Manage your influencer campaigns and track performance
                   </p>
                 </div>
@@ -261,7 +233,7 @@ export default function BrandDashboard() {
                 </div>
                 <div>
                   <p className="text-sm text-slate-400 mb-1">Active Campaigns</p>
-                  <p className="text-3xl font-bold mb-2">3</p>
+                  <p className="text-3xl font-bold text-white mb-2">3</p>
                   <p className="text-xs text-slate-400">2 more than last month</p>
                 </div>
               </CardContent>
@@ -280,7 +252,7 @@ export default function BrandDashboard() {
                 </div>
                 <div>
                   <p className="text-sm text-slate-400 mb-1">Total Influencers</p>
-                  <p className="text-3xl font-bold mb-2">20</p>
+                  <p className="text-3xl font-bold text-white mb-2">20</p>
                   <p className="text-xs text-slate-400">12 active, 8 pending</p>
                 </div>
               </CardContent>
@@ -299,7 +271,7 @@ export default function BrandDashboard() {
                 </div>
                 <div>
                   <p className="text-sm text-slate-400 mb-1">Total Reach</p>
-                  <p className="text-3xl font-bold mb-2">2.4M</p>
+                  <p className="text-3xl font-bold text-white mb-2">2.4M</p>
                   <p className="text-xs text-slate-400">1.2M this month</p>
                 </div>
               </CardContent>
@@ -318,7 +290,7 @@ export default function BrandDashboard() {
                 </div>
                 <div>
                   <p className="text-sm text-slate-400 mb-1">Total Spent</p>
-                  <p className="text-3xl font-bold mb-2">$32.7K</p>
+                  <p className="text-3xl font-bold text-white mb-2">$32.7K</p>
                   <p className="text-xs text-slate-400">$18.5K remaining</p>
                 </div>
               </CardContent>
@@ -373,28 +345,28 @@ export default function BrandDashboard() {
                             {campaign.status}
                           </Badge>
                         </div>
-                          <p className="text-slate-400 text-lg mb-4">{campaign.description}</p>
+                          <p className="text-muted-foreground text-lg mb-4">{campaign.description}</p>
                           
                           {/* Campaign Metrics */}
                           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
                             <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/20 dark:to-cyan-950/20 rounded-xl">
                               <DollarSign className="w-6 h-6 text-blue-600 mx-auto mb-2" />
-                          <p className="text-sm text-slate-400">Budget</p>
+                          <p className="text-sm text-muted-foreground">Budget</p>
                               <p className="text-xl font-bold text-blue-600">{campaign.budget}</p>
                         </div>
                             <div className="text-center p-4 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 rounded-xl">
                               <TrendingUp className="w-6 h-6 text-green-600 mx-auto mb-2" />
-                          <p className="text-sm text-slate-400">Spent</p>
+                          <p className="text-sm text-muted-foreground">Spent</p>
                               <p className="text-xl font-bold text-green-600">{campaign.spent}</p>
                         </div>
                             <div className="text-center p-4 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950/20 dark:to-pink-950/20 rounded-xl">
                               <Users className="w-6 h-6 text-purple-600 mx-auto mb-2" />
-                          <p className="text-sm text-slate-400">Influencers</p>
+                          <p className="text-sm text-muted-foreground">Influencers</p>
                               <p className="text-xl font-bold text-purple-600">{campaign.influencers}</p>
                         </div>
                             <div className="text-center p-4 bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-950/20 dark:to-red-950/20 rounded-xl">
                               <Activity className="w-6 h-6 text-orange-600 mx-auto mb-2" />
-                          <p className="text-sm text-slate-400">Applications</p>
+                          <p className="text-sm text-muted-foreground">Applications</p>
                               <p className="text-xl font-bold text-orange-600">{campaign.applications}</p>
                         </div>
                       </div>
@@ -406,7 +378,7 @@ export default function BrandDashboard() {
                               <span className="text-2xl font-bold text-primary">{campaign.progress}%</span>
                             </div>
                             <Progress value={campaign.progress} className="h-3" />
-                            <div className="flex justify-between text-sm text-slate-400">
+                            <div className="flex justify-between text-sm text-muted-foreground">
                               <span>Started: {campaign.startDate}</span>
                               <span>Ends: {campaign.endDate}</span>
                         </div>
@@ -735,9 +707,10 @@ export default function BrandDashboard() {
                   id="edit-title"
                   value={editingCampaign.title}
                   onChange={(e) => setEditingCampaign({...editingCampaign, title: e.target.value})}
-                      className="h-14 text-base border-2 border-slate-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 bg-slate-700 text-white placeholder:text-slate-400"
+                      className={`h-14 text-base border-2 ${editErrors.title ? 'border-destructive focus:border-destructive focus:ring-destructive/20' : 'border-slate-600 focus:border-blue-500 focus:ring-blue-500/20'} focus:ring-2 transition-all duration-200 bg-slate-700 text-white placeholder:text-slate-400`}
                       placeholder="Enter campaign title"
                     />
+                    {editErrors.title && <p className="text-destructive text-sm">{editErrors.title}</p>}
                     <p className="text-xs text-slate-400">Choose a clear, descriptive title for your campaign</p>
                   </div>
 
@@ -798,9 +771,10 @@ export default function BrandDashboard() {
                   value={editingCampaign.description}
                   onChange={(e) => setEditingCampaign({...editingCampaign, description: e.target.value})}
                     rows={5}
-                    className="text-base resize-none border-2 border-slate-600 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all duration-200 bg-slate-700 text-white placeholder:text-slate-400"
+                    className={`text-base resize-none border-2 ${editErrors.description ? 'border-destructive focus:border-destructive focus:ring-destructive/20' : 'border-slate-600 focus:border-green-500 focus:ring-green-500/20'} focus:ring-2 transition-all duration-200 bg-slate-700 text-white placeholder:text-slate-400`}
                     placeholder="Describe your campaign goals, target audience, and what you want to achieve..."
                 />
+                  {editErrors.description && <p className="text-destructive text-sm">{editErrors.description}</p>}
                   <div className="flex justify-between items-center text-xs text-slate-400">
                     <span>Provide detailed information about your campaign</span>
                     <span>{editingCampaign.description?.length || 0} characters</span>
@@ -830,9 +804,10 @@ export default function BrandDashboard() {
                     id="edit-budget"
                     value={editingCampaign.budget}
                     onChange={(e) => setEditingCampaign({...editingCampaign, budget: e.target.value})}
-                      className="h-14 text-base border-2 border-slate-600 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all duration-200 bg-slate-700 text-white placeholder:text-slate-400"
+                      className={`h-14 text-base border-2 ${editErrors.budget ? 'border-destructive focus:border-destructive focus:ring-destructive/20' : 'border-slate-600 focus:border-green-500 focus:ring-green-500/20'} focus:ring-2 transition-all duration-200 bg-slate-700 text-white placeholder:text-slate-400`}
                       placeholder="$25,000"
                     />
+                    {editErrors.budget && <p className="text-destructive text-sm">{editErrors.budget}</p>}
                     <p className="text-xs text-slate-400">Total amount allocated for this campaign</p>
                   </div>
 
@@ -879,8 +854,9 @@ export default function BrandDashboard() {
                       type="date"
                       value={editingCampaign.startDate}
                       onChange={(e) => setEditingCampaign({...editingCampaign, startDate: e.target.value})}
-                      className="h-14 text-base border-2 border-slate-600 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200 bg-slate-700 text-white"
+                      className={`h-14 text-base border-2 ${editErrors.startDate ? 'border-destructive focus:border-destructive focus:ring-destructive/20' : 'border-slate-600 focus:border-orange-500 focus:ring-orange-500/20'} focus:ring-2 transition-all duration-200 bg-slate-700 text-white`}
                     />
+                    {editErrors.startDate && <p className="text-destructive text-sm">{editErrors.startDate}</p>}
                     <p className="text-xs text-slate-400">When the campaign will begin</p>
                   </div>
 
@@ -894,8 +870,9 @@ export default function BrandDashboard() {
                       type="date"
                       value={editingCampaign.endDate}
                       onChange={(e) => setEditingCampaign({...editingCampaign, endDate: e.target.value})}
-                      className="h-14 text-base border-2 border-slate-600 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200 bg-slate-700 text-white"
+                      className={`h-14 text-base border-2 ${editErrors.endDate ? 'border-destructive focus:border-destructive focus:ring-destructive/20' : 'border-slate-600 focus:border-red-500 focus:ring-red-500/20'} focus:ring-2 transition-all duration-200 bg-slate-700 text-white`}
                     />
+                    {editErrors.endDate && <p className="text-destructive text-sm">{editErrors.endDate}</p>}
                     <p className="text-xs text-slate-400">When the campaign will end</p>
                   </div>
                 </div>

@@ -111,7 +111,29 @@ export default function CampaignCreate() {
     }));
   };
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validateStep = (step: number): boolean => {
+    const stepErrors: Record<string, string> = {};
+    if (step === 1) {
+      if (!formData.campaignTitle?.trim()) stepErrors.campaignTitle = "Title is required";
+      if (!formData.campaignDescription?.trim()) stepErrors.campaignDescription = "Description is required";
+      if (selectedPlatforms.length === 0) stepErrors.platforms = "Select at least one platform";
+    }
+    if (step === 3) {
+      if (!formData.budget?.trim()) stepErrors.budget = "Budget is required";
+      if (!formData.startDate) stepErrors.startDate = "Start date is required";
+      if (!formData.endDate) stepErrors.endDate = "End date is required";
+      if (formData.startDate && formData.endDate && new Date(formData.startDate) > new Date(formData.endDate)) {
+        stepErrors.endDate = "End date must be after start date";
+      }
+    }
+    setErrors(stepErrors);
+    return Object.keys(stepErrors).length === 0;
+  };
+
   const nextStep = () => {
+    if (!validateStep(currentStep)) return;
     setIsAnimating(true);
     setTimeout(() => {
       setCurrentStep(prev => Math.min(prev + 1, 4));
@@ -231,10 +253,11 @@ export default function CampaignCreate() {
                         <Input 
                           id="campaign-title" 
                           placeholder="e.g., Summer Fashion Collection 2024"
-                          className="h-12 text-base"
+                          className={`h-12 text-base ${errors.campaignTitle ? 'border-destructive focus-visible:ring-destructive' : ''}`}
                           value={formData.campaignTitle}
                           onChange={(e) => handleInputChange("campaignTitle", e.target.value)}
                         />
+                        {errors.campaignTitle && <p className="text-destructive text-sm">{errors.campaignTitle}</p>}
                       </div>
                       
                       <div className="space-y-3">
@@ -265,10 +288,11 @@ export default function CampaignCreate() {
                       <Textarea 
                         id="campaign-description" 
                         placeholder="Describe your campaign goals, target audience, and what you want to achieve..."
-                        className="min-h-[140px] text-base resize-none"
+                        className={`min-h-[140px] text-base resize-none ${errors.campaignDescription ? 'border-destructive focus-visible:ring-destructive' : ''}`}
                         value={formData.campaignDescription}
                         onChange={(e) => handleInputChange("campaignDescription", e.target.value)}
                       />
+                      {errors.campaignDescription && <p className="text-destructive text-sm">{errors.campaignDescription}</p>}
                     </div>
 
                     <div className="space-y-4">
@@ -299,6 +323,7 @@ export default function CampaignCreate() {
                           </div>
                         ))}
                       </div>
+                      {errors.platforms && <p className="text-destructive text-sm">{errors.platforms}</p>}
                       {selectedPlatforms.length > 0 && (
                         <div className="flex flex-wrap gap-2 mt-4">
                           <span className="text-sm text-muted-foreground">Selected:</span>
