@@ -660,8 +660,8 @@ export default function BrandDashboard() {
 
       {/* Enhanced Edit Campaign Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="max-w-5xl max-h-[95vh] overflow-y-auto bg-slate-900 border-2 border-slate-700 shadow-2xl">
-          <DialogHeader className="pb-8 border-b border-slate-700">
+        <DialogContent className="max-w-5xl max-h-[95vh] overflow-y-auto bg-black border-2 border-gray-800 shadow-2xl">
+          <DialogHeader className="pb-8 border-b border-gray-800">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
@@ -686,7 +686,7 @@ export default function BrandDashboard() {
           {editingCampaign && (
             <div className="space-y-8">
               {/* Basic Information */}
-              <div className="bg-slate-800 p-8 rounded-2xl border border-slate-700 shadow-lg">
+              <div className="bg-gray-900 p-8 rounded-2xl border border-gray-700 shadow-lg">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-md">
                     <Target className="w-6 h-6 text-white" />
@@ -707,7 +707,7 @@ export default function BrandDashboard() {
                   id="edit-title"
                   value={editingCampaign.title}
                   onChange={(e) => setEditingCampaign({...editingCampaign, title: e.target.value})}
-                      className={`h-14 text-base border-2 ${editErrors.title ? 'border-destructive focus:border-destructive focus:ring-destructive/20' : 'border-slate-600 focus:border-blue-500 focus:ring-blue-500/20'} focus:ring-2 transition-all duration-200 bg-slate-700 text-white placeholder:text-slate-400`}
+                      className={`h-14 text-base border-2 ${editErrors.title ? 'border-destructive focus:border-destructive focus:ring-destructive/20' : 'border-gray-700 focus:border-blue-500 focus:ring-blue-500/20'} focus:ring-2 transition-all duration-200 bg-gray-800 text-white placeholder:text-slate-400`}
                       placeholder="Enter campaign title"
                     />
                     {editErrors.title && <p className="text-destructive text-sm">{editErrors.title}</p>}
@@ -723,7 +723,7 @@ export default function BrandDashboard() {
                       value={editingCampaign.status}
                       onValueChange={(value) => setEditingCampaign({...editingCampaign, status: value})}
                     >
-                      <SelectTrigger className="h-14 text-base border-2 border-slate-600 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-200 bg-slate-700 text-white">
+                      <SelectTrigger className="h-14 text-base border-2 border-gray-700 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-200 bg-gray-800 text-white">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -771,7 +771,7 @@ export default function BrandDashboard() {
                   value={editingCampaign.description}
                   onChange={(e) => setEditingCampaign({...editingCampaign, description: e.target.value})}
                     rows={5}
-                    className={`text-base resize-none border-2 ${editErrors.description ? 'border-destructive focus:border-destructive focus:ring-destructive/20' : 'border-slate-600 focus:border-green-500 focus:ring-green-500/20'} focus:ring-2 transition-all duration-200 bg-slate-700 text-white placeholder:text-slate-400`}
+                    className={`text-base resize-none border-2 ${editErrors.description ? 'border-destructive focus:border-destructive focus:ring-destructive/20' : 'border-gray-700 focus:border-green-500 focus:ring-green-500/20'} focus:ring-2 transition-all duration-200 bg-gray-800 text-white placeholder:text-slate-400`}
                     placeholder="Describe your campaign goals, target audience, and what you want to achieve..."
                 />
                   {editErrors.description && <p className="text-destructive text-sm">{editErrors.description}</p>}
@@ -783,7 +783,7 @@ export default function BrandDashboard() {
               </div>
 
               {/* Budget & Timeline */}
-              <div className="bg-slate-800 p-8 rounded-2xl border border-slate-700 shadow-lg">
+              <div className="bg-gray-900 p-8 rounded-2xl border border-gray-700 shadow-lg">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl flex items-center justify-center shadow-md">
                     <DollarSign className="w-6 h-6 text-white" />
@@ -804,7 +804,7 @@ export default function BrandDashboard() {
                     id="edit-budget"
                     value={editingCampaign.budget}
                     onChange={(e) => setEditingCampaign({...editingCampaign, budget: e.target.value})}
-                      className={`h-14 text-base border-2 ${editErrors.budget ? 'border-destructive focus:border-destructive focus:ring-destructive/20' : 'border-slate-600 focus:border-green-500 focus:ring-green-500/20'} focus:ring-2 transition-all duration-200 bg-slate-700 text-white placeholder:text-slate-400`}
+                      className={`h-14 text-base border-2 ${editErrors.budget ? 'border-destructive focus:border-destructive focus:ring-destructive/20' : 'border-gray-700 focus:border-green-500 focus:ring-green-500/20'} focus:ring-2 transition-all duration-200 bg-gray-800 text-white placeholder:text-slate-400`}
                       placeholder="$25,000"
                     />
                     {editErrors.budget && <p className="text-destructive text-sm">{editErrors.budget}</p>}
@@ -820,7 +820,7 @@ export default function BrandDashboard() {
                       id="edit-spent"
                       value={editingCampaign.spent}
                       onChange={(e) => setEditingCampaign({...editingCampaign, spent: e.target.value})}
-                      className="h-14 text-base border-2 border-slate-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 bg-slate-700 text-white placeholder:text-slate-400"
+                      className="h-14 text-base border-2 border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 bg-gray-800 text-white placeholder:text-slate-400"
                       placeholder="$18,500"
                     />
                     <p className="text-xs text-slate-400">Amount already spent on this campaign</p>
@@ -836,7 +836,7 @@ export default function BrandDashboard() {
                       type="number"
                       value={editingCampaign.influencers}
                       onChange={(e) => setEditingCampaign({...editingCampaign, influencers: parseInt(e.target.value) || 0})}
-                      className="h-14 text-base border-2 border-slate-600 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-200 bg-slate-700 text-white placeholder:text-slate-400"
+                      className="h-14 text-base border-2 border-gray-700 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-200 bg-gray-800 text-white placeholder:text-slate-400"
                       placeholder="12"
                     />
                     <p className="text-xs text-slate-400">Number of influencers to work with</p>
@@ -854,7 +854,7 @@ export default function BrandDashboard() {
                       type="date"
                       value={editingCampaign.startDate}
                       onChange={(e) => setEditingCampaign({...editingCampaign, startDate: e.target.value})}
-                      className={`h-14 text-base border-2 ${editErrors.startDate ? 'border-destructive focus:border-destructive focus:ring-destructive/20' : 'border-slate-600 focus:border-orange-500 focus:ring-orange-500/20'} focus:ring-2 transition-all duration-200 bg-slate-700 text-white`}
+                      className={`h-14 text-base border-2 ${editErrors.startDate ? 'border-destructive focus:border-destructive focus:ring-destructive/20' : 'border-gray-700 focus:border-orange-500 focus:ring-orange-500/20'} focus:ring-2 transition-all duration-200 bg-gray-800 text-white`}
                     />
                     {editErrors.startDate && <p className="text-destructive text-sm">{editErrors.startDate}</p>}
                     <p className="text-xs text-slate-400">When the campaign will begin</p>
@@ -870,7 +870,7 @@ export default function BrandDashboard() {
                       type="date"
                       value={editingCampaign.endDate}
                       onChange={(e) => setEditingCampaign({...editingCampaign, endDate: e.target.value})}
-                      className={`h-14 text-base border-2 ${editErrors.endDate ? 'border-destructive focus:border-destructive focus:ring-destructive/20' : 'border-slate-600 focus:border-red-500 focus:ring-red-500/20'} focus:ring-2 transition-all duration-200 bg-slate-700 text-white`}
+                      className={`h-14 text-base border-2 ${editErrors.endDate ? 'border-destructive focus:border-destructive focus:ring-destructive/20' : 'border-gray-700 focus:border-red-500 focus:ring-red-500/20'} focus:ring-2 transition-all duration-200 bg-gray-800 text-white`}
                     />
                     {editErrors.endDate && <p className="text-destructive text-sm">{editErrors.endDate}</p>}
                     <p className="text-xs text-slate-400">When the campaign will end</p>
@@ -899,7 +899,7 @@ export default function BrandDashboard() {
               </div>
 
               {/* Performance Metrics */}
-              <div className="bg-slate-800 p-8 rounded-2xl border border-slate-700 shadow-lg">
+              <div className="bg-gray-900 p-8 rounded-2xl border border-gray-700 shadow-lg">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl flex items-center justify-center shadow-md">
                     <BarChart3 className="w-6 h-6 text-white" />
@@ -921,7 +921,7 @@ export default function BrandDashboard() {
                       type="number"
                       value={editingCampaign.applications}
                       onChange={(e) => setEditingCampaign({...editingCampaign, applications: parseInt(e.target.value) || 0})}
-                      className="h-14 text-base border-2 border-slate-600 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-200 bg-slate-700 text-white placeholder:text-slate-400"
+                      className="h-14 text-base border-2 border-gray-700 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-200 bg-gray-800 text-white placeholder:text-slate-400"
                       placeholder="47"
                     />
                     <p className="text-xs text-slate-400">Number of influencer applications received</p>
@@ -939,7 +939,7 @@ export default function BrandDashboard() {
                       max="100"
                       value={editingCampaign.progress}
                       onChange={(e) => setEditingCampaign({...editingCampaign, progress: parseInt(e.target.value) || 0})}
-                      className="h-14 text-base border-2 border-slate-600 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/20 transition-all duration-200 bg-slate-700 text-white placeholder:text-slate-400"
+                      className="h-14 text-base border-2 border-gray-700 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/20 transition-all duration-200 bg-gray-800 text-white placeholder:text-slate-400"
                       placeholder="74"
                     />
                     <p className="text-xs text-slate-400">Overall campaign completion percentage</p>
@@ -978,23 +978,23 @@ export default function BrandDashboard() {
                 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   <div className="space-y-4">
-                    <div className="flex justify-between items-center p-4 bg-slate-700/50 rounded-xl border border-slate-600">
+                    <div className="flex justify-between items-center p-4 bg-gray-800/60 rounded-xl border border-gray-700">
                       <span className="text-slate-400">Title:</span>
                       <span className="font-semibold text-right max-w-[200px] truncate text-white">{editingCampaign.title || "Not specified"}</span>
                     </div>
-                    <div className="flex justify-between items-center p-4 bg-slate-700/50 rounded-xl border border-slate-600">
+                    <div className="flex justify-between items-center p-4 bg-gray-800/60 rounded-xl border border-gray-700">
                       <span className="text-slate-400">Status:</span>
                       <Badge className={getStatusColor(editingCampaign.status)}>
                         {editingCampaign.status}
                       </Badge>
                     </div>
-                    <div className="flex justify-between items-center p-4 bg-slate-700/50 rounded-xl border border-slate-600">
+                    <div className="flex justify-between items-center p-4 bg-gray-800/60 rounded-xl border border-gray-700">
                       <span className="text-slate-400">Budget:</span>
                       <span className="font-semibold text-green-400">{editingCampaign.budget || "Not specified"}</span>
                     </div>
                   </div>
                   <div className="space-y-4">
-                    <div className="flex justify-between items-center p-4 bg-slate-700/50 rounded-xl border border-slate-600">
+                    <div className="flex justify-between items-center p-4 bg-gray-800/60 rounded-xl border border-gray-700">
                       <span className="text-slate-400">Duration:</span>
                       <span className="font-semibold text-right text-white">
                         {editingCampaign.startDate && editingCampaign.endDate 
@@ -1002,11 +1002,11 @@ export default function BrandDashboard() {
                           : "Not specified"}
                       </span>
                     </div>
-                    <div className="flex justify-between items-center p-4 bg-slate-700/50 rounded-xl border border-slate-600">
+                    <div className="flex justify-between items-center p-4 bg-gray-800/60 rounded-xl border border-gray-700">
                       <span className="text-slate-400">Influencers:</span>
                       <span className="font-semibold text-purple-400">{editingCampaign.influencers || 0}</span>
                     </div>
-                    <div className="flex justify-between items-center p-4 bg-slate-700/50 rounded-xl border border-slate-600">
+                    <div className="flex justify-between items-center p-4 bg-gray-800/60 rounded-xl border border-gray-700">
                       <span className="text-slate-400">Progress:</span>
                       <span className="font-semibold text-blue-400">{editingCampaign.progress}%</span>
                     </div>
@@ -1021,7 +1021,7 @@ export default function BrandDashboard() {
               <Button 
                 variant="outline" 
                 onClick={() => setIsEditDialogOpen(false)}
-                className="flex-1 sm:flex-none h-12 text-base border-2 border-slate-600 hover:border-slate-500 hover:bg-slate-700 hover:scale-105 transition-all duration-200 text-white"
+                className="flex-1 sm:flex-none h-12 text-base border-2 border-gray-700 hover:border-gray-600 hover:bg-gray-800 hover:scale-105 transition-all duration-200 text-white"
               >
               Cancel
             </Button>

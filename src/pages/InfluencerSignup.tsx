@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { Instagram, Youtube, Music, Twitter, Facebook, Users, Star, TrendingUp, User, DollarSign, CheckCircle } from "lucide-react";
+import analyticsExample from "@/assets/analytics engagement.jpg";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -37,6 +38,7 @@ const InfluencerSignup = () => {
     rate: "",
     experience: "",
     portfolio: "",
+    engagementScreenshots: [] as File[],
     terms: false,
   });
 
@@ -93,7 +95,23 @@ const InfluencerSignup = () => {
 
   const progressPercentage = (currentStep / steps.length) * 100;
 
+  const validateStep = (step: number): boolean => {
+    const nextErrors: Record<string, string> = {};
+    if (step === 1) {
+      if (!formData.name.trim()) nextErrors.name = "Full name is required";
+      if (!formData.email.trim()) nextErrors.email = "Email is required";
+      if (!formData.phone.trim()) nextErrors.phone = "Phone is required";
+      if (!formData.bio.trim()) nextErrors.bio = "Bio is required";
+    }
+    if (step === 3) {
+      if (!formData.category.trim()) nextErrors.category = "Category is required";
+    }
+    setErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
+  };
+
   const nextStep = () => {
+    if (!validateStep(currentStep)) return;
     setIsAnimating(true);
     setTimeout(() => {
       setCurrentStep(prev => Math.min(prev + 1, steps.length));
@@ -132,7 +150,10 @@ const InfluencerSignup = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validate()) {
+    if ((formData.engagementScreenshots?.length || 0) === 0) {
+      setErrors(prev => ({ ...prev, engagement: "At least 1 analytics screenshot is required" }));
+    }
+    if (!validate() || (formData.engagementScreenshots?.length || 0) === 0) {
       toast({ title: "Please fix the errors", description: "Some fields are missing or invalid", variant: "destructive" });
       return;
     }
@@ -165,6 +186,7 @@ const InfluencerSignup = () => {
       experience: "",
       portfolio: "",
       terms: false,
+      engagementScreenshots: [],
     });
     setErrors({});
   };
@@ -428,36 +450,56 @@ const InfluencerSignup = () => {
                   <div className="space-y-3">
                     <Label>Content Types You Create</Label>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                      {contentTypes.map((type) => (
-                        <div key={type} className="flex items-center space-x-2">
-                          <Checkbox
-                            id={type}
-                            checked={formData.contentTypes.includes(type)}
-                            onCheckedChange={(checked) => 
-                              handleArrayChange("contentTypes", type, checked as boolean)
-                            }
-                          />
-                          <Label htmlFor={type} className="text-sm">{type}</Label>
-                        </div>
-                      ))}
+                      {contentTypes.map((type) => {
+                        const isSelected = formData.contentTypes.includes(type);
+                        return (
+                          <button
+                            key={type}
+                            type="button"
+                            onClick={() => handleArrayChange("contentTypes", type, !isSelected)}
+                            className={`relative flex items-center justify-center p-4 rounded-lg border-2 transition-all duration-200 hover:scale-105 ${
+                              isSelected
+                                ? "border-primary bg-primary/10 text-primary shadow-md"
+                                : "border-border bg-card text-foreground hover:border-primary/50 hover:bg-primary/5"
+                            }`}
+                          >
+                            <span className="text-sm font-medium">{type}</span>
+                            {isSelected && (
+                              <div className="absolute top-1 right-1">
+                                <CheckCircle className="w-4 h-4 text-primary" />
+                              </div>
+                            )}
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
 
                   <div className="space-y-3">
                     <Label>Languages Used for Content Creation</Label>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                      {languages.map((language) => (
-                        <div key={language} className="flex items-center space-x-2">
-                          <Checkbox
-                            id={language}
-                            checked={formData.languages.includes(language)}
-                            onCheckedChange={(checked) => 
-                              handleArrayChange("languages", language, checked as boolean)
-                            }
-                          />
-                          <Label htmlFor={language} className="text-sm">{language}</Label>
-                        </div>
-                      ))}
+                      {languages.map((language) => {
+                        const isSelected = formData.languages.includes(language);
+                        return (
+                          <button
+                            key={language}
+                            type="button"
+                            onClick={() => handleArrayChange("languages", language, !isSelected)}
+                            className={`relative flex items-center justify-center p-4 rounded-lg border-2 transition-all duration-200 hover:scale-105 ${
+                              isSelected
+                                ? "border-primary bg-primary/10 text-primary shadow-md"
+                                : "border-border bg-card text-foreground hover:border-primary/50 hover:bg-primary/5"
+                            }`}
+                          >
+                            <span className="text-sm font-medium">{language}</span>
+                            {isSelected && (
+                              <div className="absolute top-1 right-1">
+                                <CheckCircle className="w-4 h-4 text-primary" />
+                              </div>
+                            )}
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
                 </CardContent>
@@ -527,9 +569,25 @@ const InfluencerSignup = () => {
               </Card>
 
               {/* Terms and Submit */}
-              <Card>
+              <Card className="card-elevated">
                 <CardContent className="pt-6">
                   <div className="space-y-6">
+                    {/* Example analytics screenshot */}
+                    <div className="space-y-2">
+                      <Label>Example analytics screenshot</Label>
+                      <div className="rounded-xl overflow-hidden border border-border bg-card max-w-md">
+                        <img src={analyticsExample} alt="Analytics engagement example" className="w-full h-60 object-cover" />
+                      </div>
+                      <p className="text-xs text-muted-foreground">Attach screenshots like this from your platform analytics (reach, impressions, audience, etc.).</p>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="engagement">Platform Engagement Screenshots (Images) *</Label>
+                      <Input id="engagement" type="file" accept="image/*" multiple className={`h-12 text-base ${errors.engagement ? 'border-destructive focus-visible:ring-destructive' : ''}`} onChange={(e) => handleInputChange("engagementScreenshots", e.target.files ? Array.from(e.target.files) : [])} />
+                      {formData.engagementScreenshots?.length ? (
+                        <p className="text-xs text-muted-foreground">Selected: {formData.engagementScreenshots.length} file(s)</p>
+                      ) : null}
+                      {errors.engagement && <p className="text-destructive text-sm">{errors.engagement}</p>}
+                    </div>
                     <div className="flex items-start space-x-2">
                       <Checkbox
                         id="terms"

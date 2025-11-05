@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Search, Filter, Star, MapPin, Users, TrendingUp, Verified } from "lucide-react";
 import { allInfluencers } from "@/data/influencers";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Browse() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -171,9 +172,11 @@ export default function Browse() {
                             </div>
                             <div className="text-xs text-muted-foreground">per post</div>
                           </div>
-                          <Button variant="professional" size="sm">
-                            View Profile
-                          </Button>
+                          <Link to={`/influencer/${influencer.id}`}>
+                            <Button variant="professional" size="sm">
+                              View Profile
+                            </Button>
+                          </Link>
                         </div>
                       </div>
                     </CardContent>
