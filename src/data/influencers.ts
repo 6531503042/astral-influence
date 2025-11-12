@@ -152,5 +152,125 @@ export const allInfluencers: Influencer[] = [
     verified: true,
     location: "San Francisco, CA",
     icon: Camera
+  },
+  {
+    id: "7",
+    name: "Ryan Chen",
+    username: "@ryantech",
+    avatar: "/placeholder.svg",
+    bio: "Tech reviewer and gadget enthusiast breaking down the latest technology for everyday users.",
+    niches: ["Technology", "Gadgets", "Reviews"],
+    platforms: [
+      { platform: "YouTube", followers: "1.8M", engagementRate: "9.2%" },
+      { platform: "Instagram", followers: "950K", engagementRate: "7.5%" }
+    ],
+    totalFollowers: "2.75M",
+    averageEngagement: "8.4%",
+    ratePerPost: "$5,500",
+    rating: 4.8,
+    reviewCount: 156,
+    verified: true,
+    location: "Seattle, WA",
+    icon: Gamepad2
+  },
+  {
+    id: "8",
+    name: "Luna Martinez",
+    username: "@lunabeauty",
+    avatar: "/placeholder.svg",
+    bio: "Makeup artist and beauty influencer sharing professional techniques and product reviews.",
+    niches: ["Beauty", "Makeup", "Skincare"],
+    platforms: [
+      { platform: "Instagram", followers: "2.5M", engagementRate: "11.8%" },
+      { platform: "TikTok", followers: "3.8M", engagementRate: "17.2%" }
+    ],
+    totalFollowers: "6.3M",
+    averageEngagement: "14.5%",
+    ratePerPost: "$7,200",
+    rating: 4.9,
+    reviewCount: 203,
+    verified: true,
+    location: "Los Angeles, CA",
+    icon: Heart
+  },
+  {
+    id: "9",
+    name: "David Kim",
+    username: "@davidfitness",
+    avatar: "/placeholder.svg",
+    bio: "Personal trainer and nutrition coach helping people achieve their fitness goals.",
+    niches: ["Fitness", "Health", "Nutrition"],
+    platforms: [
+      { platform: "Instagram", followers: "1.4M", engagementRate: "10.5%" },
+      { platform: "YouTube", followers: "520K", engagementRate: "8.1%" }
+    ],
+    totalFollowers: "1.92M",
+    averageEngagement: "9.3%",
+    ratePerPost: "$3,800",
+    rating: 4.7,
+    reviewCount: 98,
+    verified: true,
+    location: "Chicago, IL",
+    icon: Dumbbell
+  },
+  {
+    id: "10",
+    name: "Zoe Anderson",
+    username: "@zoestyle",
+    avatar: "/placeholder.svg",
+    bio: "Fashion stylist and trendsetter showcasing the latest in streetwear and high fashion.",
+    niches: ["Fashion", "Style", "Lifestyle"],
+    platforms: [
+      { platform: "Instagram", followers: "2.8M", engagementRate: "13.2%" },
+      { platform: "TikTok", followers: "4.2M", engagementRate: "20.1%" }
+    ],
+    totalFollowers: "7.0M",
+    averageEngagement: "16.7%",
+    ratePerPost: "$8,500",
+    rating: 4.9,
+    reviewCount: 187,
+    verified: true,
+    location: "New York, NY",
+    icon: Camera
+  },
+  {
+    id: "11",
+    name: "Chris Taylor",
+    username: "@chrisadventures",
+    avatar: "/placeholder.svg",
+    bio: "Outdoor enthusiast and adventure vlogger exploring the world's most beautiful destinations.",
+    niches: ["Travel", "Adventure", "Outdoor"],
+    platforms: [
+      { platform: "YouTube", followers: "1.3M", engagementRate: "9.8%" },
+      { platform: "Instagram", followers: "890K", engagementRate: "8.4%" }
+    ],
+    totalFollowers: "2.19M",
+    averageEngagement: "9.1%",
+    ratePerPost: "$4,200",
+    rating: 4.8,
+    reviewCount: 124,
+    verified: true,
+    location: "Portland, OR",
+    icon: MapPin
+  },
+  {
+    id: "12",
+    name: "Isabella Rodriguez",
+    username: "@isabellacooks",
+    avatar: "/placeholder.svg",
+    bio: "Chef and food content creator sharing authentic recipes and cooking tips from around the world.",
+    niches: ["Food", "Cooking", "Recipes"],
+    platforms: [
+      { platform: "Instagram", followers: "1.7M", engagementRate: "9.5%" },
+      { platform: "YouTube", followers: "1.1M", engagementRate: "7.8%" }
+    ],
+    totalFollowers: "2.8M",
+    averageEngagement: "8.7%",
+    ratePerPost: "$4,600",
+    rating: 4.8,
+    reviewCount: 145,
+    verified: true,
+    location: "Miami, FL",
+    icon: Coffee
   }
 ];

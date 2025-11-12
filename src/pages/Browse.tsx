@@ -69,11 +69,30 @@ export default function Browse() {
               </Button>
             </div>
 
-            {/* Results Count */}
-            <div className="text-center mb-8">
+            {/* Results Count and Sort */}
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
               <p className="text-muted-foreground">
                 Found <span className="text-primary font-semibold">{filteredInfluencers.length}</span> influencers
+                {selectedNiche !== "all" && (
+                  <span className="ml-2">
+                    in <span className="text-primary font-semibold">{selectedNiche}</span>
+                  </span>
+                )}
               </p>
+              <Select defaultValue="relevance">
+                <SelectTrigger className="w-full sm:w-48">
+                  <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="relevance">Relevance</SelectItem>
+                  <SelectItem value="followers-high">Followers: High to Low</SelectItem>
+                  <SelectItem value="followers-low">Followers: Low to High</SelectItem>
+                  <SelectItem value="engagement-high">Engagement: High to Low</SelectItem>
+                  <SelectItem value="rating-high">Rating: High to Low</SelectItem>
+                  <SelectItem value="price-low">Price: Low to High</SelectItem>
+                  <SelectItem value="price-high">Price: High to Low</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </section>
@@ -185,12 +204,40 @@ export default function Browse() {
               })}
             </div>
 
+            {/* Empty State */}
+            {filteredInfluencers.length === 0 && (
+              <div className="text-center py-16">
+                <div className="w-24 h-24 bg-muted rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Search className="w-12 h-12 text-muted-foreground" />
+                </div>
+                <h3 className="text-2xl font-bold mb-2">No influencers found</h3>
+                <p className="text-muted-foreground mb-6">
+                  Try adjusting your search or filter criteria
+                </p>
+                <Button 
+                  variant="outline" 
+                  onClick={() => {
+                    setSearchTerm("");
+                    setSelectedNiche("all");
+                  }}
+                >
+                  Clear Filters
+                </Button>
+              </div>
+            )}
+
             {/* Load More */}
-            <div className="text-center mt-12">
-              <Button variant="default" size="lg">
-                Load More Influencers
-              </Button>
-            </div>
+            {filteredInfluencers.length > 0 && (
+              <div className="text-center mt-12">
+                <Button variant="default" size="lg" className="gap-2">
+                  Load More Influencers
+                  <TrendingUp className="w-4 h-4" />
+                </Button>
+                <p className="text-sm text-muted-foreground mt-4">
+                  Showing {Math.min(filteredInfluencers.length, 12)} of {filteredInfluencers.length} influencers
+                </p>
+              </div>
+            )}
           </div>
         </section>
       </main>

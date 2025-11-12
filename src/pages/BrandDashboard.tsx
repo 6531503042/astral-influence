@@ -557,11 +557,97 @@ export default function BrandDashboard() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="h-80 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20 rounded-xl flex items-center justify-center border-2 border-dashed border-blue-200 dark:border-blue-800">
-                      <div className="text-center">
-                        <BarChart3 className="w-16 h-16 text-blue-400 mx-auto mb-4" />
-                        <p className="text-lg font-semibold text-blue-600 mb-2">Performance Chart</p>
-                        <p className="text-slate-400">Interactive analytics coming soon</p>
+                    <div className="space-y-6">
+                      {/* Chart Area */}
+                      <div className="h-64 relative">
+                        <svg className="w-full h-full" viewBox="0 0 400 200" preserveAspectRatio="none">
+                          {/* Grid Lines */}
+                          {[0, 1, 2, 3, 4].map((i) => (
+                            <line
+                              key={i}
+                              x1="0"
+                              y1={40 + i * 40}
+                              x2="400"
+                              y2={40 + i * 40}
+                              stroke="currentColor"
+                              strokeWidth="0.5"
+                              className="text-slate-700"
+                              opacity="0.2"
+                            />
+                          ))}
+                          {/* Data Line */}
+                          <polyline
+                            points="20,160 60,140 100,120 140,100 180,90 220,85 260,75 300,70 340,65 380,60"
+                            fill="none"
+                            stroke="url(#gradient)"
+                            strokeWidth="3"
+                            className="drop-shadow-lg"
+                          />
+                          {/* Gradient Definition */}
+                          <defs>
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                              <stop offset="0%" stopColor="#3b82f6" />
+                              <stop offset="100%" stopColor="#8b5cf6" />
+                            </linearGradient>
+                          </defs>
+                          {/* Area Fill */}
+                          <polygon
+                            points="20,160 60,140 100,120 140,100 180,90 220,85 260,75 300,70 340,65 380,60 380,200 20,200"
+                            fill="url(#gradient)"
+                            opacity="0.2"
+                          />
+                          {/* Data Points */}
+                          {[
+                            { x: 20, y: 160 },
+                            { x: 60, y: 140 },
+                            { x: 100, y: 120 },
+                            { x: 140, y: 100 },
+                            { x: 180, y: 90 },
+                            { x: 220, y: 85 },
+                            { x: 260, y: 75 },
+                            { x: 300, y: 70 },
+                            { x: 340, y: 65 },
+                            { x: 380, y: 60 },
+                          ].map((point, i) => (
+                            <circle
+                              key={i}
+                              cx={point.x}
+                              cy={point.y}
+                              r="4"
+                              fill="#3b82f6"
+                              className="drop-shadow-md"
+                            />
+                          ))}
+                        </svg>
+                        {/* Y-Axis Labels */}
+                        <div className="absolute left-0 top-0 bottom-0 flex flex-col justify-between text-xs text-slate-400 py-2">
+                          <span>100K</span>
+                          <span>75K</span>
+                          <span>50K</span>
+                          <span>25K</span>
+                          <span>0</span>
+                        </div>
+                        {/* X-Axis Labels */}
+                        <div className="absolute bottom-0 left-0 right-0 flex justify-between text-xs text-slate-400 px-4 pb-2">
+                          {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'].map((month) => (
+                            <span key={month}>{month}</span>
+                          ))}
+                        </div>
+                      </div>
+                      {/* Stats Summary */}
+                      <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border">
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-blue-600">2.4M</div>
+                          <div className="text-xs text-slate-400">Total Impressions</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-green-600">+23%</div>
+                          <div className="text-xs text-slate-400">Growth Rate</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-purple-600">4.2%</div>
+                          <div className="text-xs text-slate-400">Avg Engagement</div>
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -575,30 +661,41 @@ export default function BrandDashboard() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    {Array.from({length: 3}).map((_, i) => (
-                      <div key={i} className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-xl hover:scale-105 transition-transform">
+                    {[
+                      { title: "Summer Collection Launch", influencer: "@sofiabeauty", likes: 18.5, shares: 3.2, engagement: 15.8, image: "👗" },
+                      { title: "Product Review Video", influencer: "@alexgamesyt", likes: 22.3, shares: 4.1, engagement: 18.2, image: "🎮" },
+                      { title: "Fitness Challenge Post", influencer: "@marcusfitlife", likes: 15.7, shares: 2.8, engagement: 13.5, image: "💪" },
+                    ].map((content, i) => (
+                      <div key={i} className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-xl hover:scale-105 transition-transform border border-border">
                         <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
-                            <span className="text-white font-bold">#{i + 1}</span>
+                          <div className="w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-2xl">
+                            {content.image}
                           </div>
                           <div>
-                            <p className="font-semibold text-lg">Summer Fashion Look {i + 1}</p>
-                            <p className="text-sm text-slate-400">@influencer{i + 1}</p>
-                            <div className="flex items-center gap-4 mt-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="text-xs font-bold text-purple-600 bg-purple-100 dark:bg-purple-900/20 px-2 py-0.5 rounded">#{i + 1}</span>
+                              <p className="font-semibold text-base">{content.title}</p>
+                            </div>
+                            <p className="text-sm text-slate-400 mb-2">{content.influencer}</p>
+                            <div className="flex items-center gap-4">
                               <div className="flex items-center gap-1 text-red-500">
-                                <Heart className="w-3 h-3" />
-                                <span className="text-xs">{(15.2 + i * 3.1).toFixed(1)}K</span>
+                                <Heart className="w-3.5 h-3.5 fill-red-500" />
+                                <span className="text-xs font-medium">{content.likes}K</span>
                               </div>
                               <div className="flex items-center gap-1 text-blue-500">
-                                <Share2 className="w-3 h-3" />
-                                <span className="text-xs">{(2.1 + i * 0.8).toFixed(1)}K</span>
+                                <Share2 className="w-3.5 h-3.5" />
+                                <span className="text-xs font-medium">{content.shares}K</span>
+                              </div>
+                              <div className="flex items-center gap-1 text-green-500">
+                                <TrendingUp className="w-3.5 h-3.5" />
+                                <span className="text-xs font-medium">{content.engagement}%</span>
                               </div>
                             </div>
                           </div>
                         </div>
                         <div className="text-right">
-                          <p className="text-2xl font-bold text-green-600">{(12.5 + i * 2.3).toFixed(1)}K</p>
-                          <p className="text-sm text-slate-400">engagement</p>
+                          <p className="text-xl font-bold text-green-600">{content.engagement}K</p>
+                          <p className="text-xs text-slate-400">total engagement</p>
                         </div>
                       </div>
                     ))}
@@ -616,32 +713,46 @@ export default function BrandDashboard() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {Array.from({length: 5}).map((_, i) => (
-                    <div key={i} className="flex items-center gap-4 p-6 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-blue-950/20 dark:hover:to-purple-950/20 rounded-xl cursor-pointer transition-all duration-200 hover:scale-[1.02]">
-                      <div className="w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center">
-                        <span className="text-white font-bold text-lg">
-                          {`Influencer ${i + 1}`.split(' ').map(n => n[0]).join('')}
-                        </span>
+                  {[
+                    { name: "Sofia Chen", username: "@sofiabeauty", initials: "SC", time: "2h ago", message: "Thank you for the campaign details! I'm excited to work with your brand. I have some creative ideas that align perfectly with your vision. When would be a good time to discuss?", campaign: "Summer Fashion Collection", proposal: "$8,200", online: true },
+                    { name: "Alex Rivera", username: "@alexgamesyt", initials: "AR", time: "5h ago", message: "Hi! I've reviewed the campaign brief and I'm very interested. My audience would love this collaboration. Can we schedule a call to discuss the deliverables?", campaign: "Tech Product Launch", proposal: "$5,500", online: true },
+                    { name: "Marcus Johnson", username: "@marcusfitlife", initials: "MJ", time: "1d ago", message: "Thanks for reaching out! I'd love to be part of this campaign. I have availability next month and can deliver high-quality fitness content that resonates with your target audience.", campaign: "Fitness Challenge", proposal: "$4,800", online: false },
+                    { name: "Emma Thompson", username: "@emmafoodie", initials: "ET", time: "2d ago", message: "Hello! I'm interested in collaborating on this food campaign. I specialize in authentic recipe content and have great engagement with food enthusiasts. Let me know if you'd like to see my portfolio!", campaign: "Food Product Launch", proposal: "$3,200", online: false },
+                    { name: "Maya Patel", username: "@mayacreates", initials: "MP", time: "3d ago", message: "Hi there! I've been following your brand and I'm thrilled about this opportunity. I can create stunning fashion content that showcases your products beautifully. Looking forward to working together!", campaign: "Fashion Collection", proposal: "$6,800", online: false },
+                  ].map((msg, i) => (
+                    <div key={i} className="flex items-center gap-4 p-6 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-blue-950/20 dark:hover:to-purple-950/20 rounded-xl cursor-pointer transition-all duration-200 hover:scale-[1.02] border border-border">
+                      <div className="relative">
+                        <div className="w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center">
+                          <span className="text-white font-bold text-lg">
+                            {msg.initials}
+                          </span>
+                        </div>
+                        {msg.online && (
+                          <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-background"></div>
+                        )}
                       </div>
                       <div className="flex-1">
                         <div className="flex justify-between items-start mb-2">
-                          <h4 className="font-bold text-lg">Influencer Name {i + 1}</h4>
+                          <div>
+                            <h4 className="font-bold text-lg">{msg.name}</h4>
+                            <p className="text-sm text-slate-400">{msg.username}</p>
+                          </div>
                           <div className="flex items-center gap-2">
-                            <span className="text-sm text-slate-400">{i + 1}h ago</span>
-                            {i < 2 && <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>}
+                            <span className="text-sm text-slate-400">{msg.time}</span>
+                            {msg.online && <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>}
                           </div>
                         </div>
-                        <p className="text-slate-400 mb-2">
-                          Thank you for the campaign details. I'm excited to work with your brand and create amazing content...
+                        <p className="text-slate-400 mb-3 line-clamp-2">
+                          {msg.message}
                         </p>
                         <div className="flex items-center gap-4 text-sm">
                           <div className="flex items-center gap-1 text-blue-500">
                             <MessageCircle className="w-3 h-3" />
-                            <span>Campaign: Summer Fashion</span>
+                            <span className="font-medium">{msg.campaign}</span>
                           </div>
                           <div className="flex items-center gap-1 text-green-500">
                             <DollarSign className="w-3 h-3" />
-                            <span>Proposal: ${(5000 + i * 1000).toLocaleString()}</span>
+                            <span className="font-medium">Proposal: {msg.proposal}</span>
                           </div>
                         </div>
                       </div>

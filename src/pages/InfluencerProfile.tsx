@@ -216,13 +216,39 @@ export default function InfluencerProfile() {
 
                 <TabsContent value="portfolio" className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {Array.from({length: 6}).map((_, i) => (
-                      <Card key={i} className="card-elevated hover-lift overflow-hidden">
+                    {[
+                      { title: "Summer Fashion Collection 2024", brand: "Fashion Brand Co.", type: "Instagram Posts", engagement: "125K", emoji: "👗" },
+                      { title: "Product Launch Campaign", brand: "Tech Innovations", type: "YouTube Video", engagement: "450K", emoji: "📱" },
+                      { title: "Lifestyle Content Series", brand: "Wellness Plus", type: "Instagram Reels", engagement: "280K", emoji: "✨" },
+                      { title: "Holiday Special Promotion", brand: "Retail Express", type: "TikTok Campaign", engagement: "320K", emoji: "🎄" },
+                      { title: "Brand Ambassador Program", brand: "Sportswear Pro", type: "Multi-Platform", engagement: "890K", emoji: "🏃" },
+                      { title: "Product Review Series", brand: "Beauty Essentials", type: "YouTube & IG", engagement: "210K", emoji: "💄" },
+                    ].map((project, i) => (
+                      <Card key={i} className="card-elevated hover-lift overflow-hidden group">
                         <CardContent className="p-0">
-                          <div className="aspect-square bg-gradient-secondary"></div>
+                          <div className="aspect-square bg-gradient-to-br from-primary/20 via-accent/20 to-primary/10 flex items-center justify-center text-6xl group-hover:scale-105 transition-transform relative overflow-hidden">
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <span className="relative z-10">{project.emoji}</span>
+                            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                              <div className="flex items-center justify-between text-white text-sm">
+                                <span className="flex items-center gap-1">
+                                  <Heart className="w-4 h-4 fill-white" />
+                                  {project.engagement}
+                                </span>
+                                <span className="flex items-center gap-1">
+                                  <Share2 className="w-4 h-4" />
+                                  {Math.floor(parseFloat(project.engagement) * 0.15)}K
+                                </span>
+                              </div>
+                            </div>
+                          </div>
                           <div className="p-4">
-                            <h3 className="font-semibold mb-2">Campaign Project {i + 1}</h3>
-                            <p className="text-sm text-muted-foreground">Brand collaboration showcase</p>
+                            <h3 className="font-semibold mb-1">{project.title}</h3>
+                            <p className="text-sm text-muted-foreground mb-2">{project.brand}</p>
+                            <div className="flex items-center justify-between">
+                              <Badge variant="secondary" className="text-xs">{project.type}</Badge>
+                              <span className="text-xs text-muted-foreground">{project.engagement} reach</span>
+                            </div>
                           </div>
                         </CardContent>
                       </Card>
@@ -259,25 +285,82 @@ export default function InfluencerProfile() {
 
                 <TabsContent value="reviews" className="space-y-6">
                   <div className="grid gap-6">
-                    {Array.from({length: 5}).map((_, i) => (
-                      <Card key={i} className="card-elevated">
+                    {[
+                      { 
+                        brand: "Fashion Brand Co.", 
+                        rating: 5.0, 
+                        review: "Outstanding collaboration! Sofia delivered exceptional content that exceeded our expectations. Her attention to detail and creative vision helped us achieve 3x our engagement goals. Highly professional and easy to work with.",
+                        campaign: "Summer Collection Launch",
+                        date: "2 weeks ago",
+                        metrics: "125K impressions, 8.2% engagement"
+                      },
+                      { 
+                        brand: "Tech Innovations", 
+                        rating: 5.0, 
+                        review: "Professional, responsive, and creative. The product review video was thorough and authentic, resulting in a significant boost in product awareness. Would definitely collaborate again!",
+                        campaign: "Product Launch Campaign",
+                        date: "1 month ago",
+                        metrics: "450K views, 12.5% engagement"
+                      },
+                      { 
+                        brand: "Wellness Plus", 
+                        rating: 4.8, 
+                        review: "Great partnership! Sofia's content resonated perfectly with our target audience. The lifestyle series generated excellent engagement and helped us reach new demographics.",
+                        campaign: "Lifestyle Content Series",
+                        date: "2 months ago",
+                        metrics: "280K reach, 9.1% engagement"
+                      },
+                      { 
+                        brand: "Retail Express", 
+                        rating: 5.0, 
+                        review: "Sofia is a true professional. Her holiday campaign content was creative, on-brand, and delivered exceptional results. The collaboration was seamless from start to finish.",
+                        campaign: "Holiday Special Promotion",
+                        date: "3 months ago",
+                        metrics: "320K impressions, 10.3% engagement"
+                      },
+                      { 
+                        brand: "Beauty Essentials", 
+                        rating: 4.9, 
+                        review: "Excellent work! The product review series was authentic and engaging. Sofia's expertise in beauty content helped us build trust with our audience and drive conversions.",
+                        campaign: "Product Review Series",
+                        date: "4 months ago",
+                        metrics: "210K views, 7.8% engagement"
+                      },
+                    ].map((review, i) => (
+                      <Card key={i} className="card-elevated hover:scale-[1.01] transition-transform">
                         <CardContent className="p-6">
                           <div className="flex items-start gap-4">
-                            <div className="w-10 h-10 bg-gradient-primary rounded-full"></div>
+                            <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                              {review.brand.charAt(0)}
+                            </div>
                             <div className="flex-1">
                               <div className="flex items-center justify-between mb-2">
-                                <h4 className="font-semibold">Brand Name {i + 1}</h4>
+                                <div>
+                                  <h4 className="font-semibold text-lg">{review.brand}</h4>
+                                  <p className="text-sm text-muted-foreground">{review.campaign}</p>
+                                </div>
                                 <div className="flex items-center gap-1">
-                                  <Star className="w-4 h-4 text-primary fill-primary" />
-                                  <span className="font-medium">5.0</span>
+                                  {Array.from({length: 5}).map((_, j) => (
+                                    <Star 
+                                      key={j} 
+                                      className={`w-4 h-4 ${j < Math.floor(review.rating) ? 'text-primary fill-primary' : 'text-muted-foreground'}`} 
+                                    />
+                                  ))}
+                                  <span className="font-medium ml-1">{review.rating}</span>
                                 </div>
                               </div>
-                              <p className="text-muted-foreground mb-2">
-                                "Excellent collaboration! Professional, creative, and delivered amazing results for our campaign."
+                              <p className="text-muted-foreground mb-3 leading-relaxed">
+                                "{review.review}"
                               </p>
-                              <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                                <Clock className="w-3 h-3" />
-                                <span>{i + 1} month ago</span>
+                              <div className="flex flex-wrap items-center gap-4 text-sm">
+                                <div className="flex items-center gap-1 text-muted-foreground">
+                                  <Clock className="w-3 h-3" />
+                                  <span>{review.date}</span>
+                                </div>
+                                <div className="flex items-center gap-1 text-green-600">
+                                  <TrendingUp className="w-3 h-3" />
+                                  <span className="font-medium">{review.metrics}</span>
+                                </div>
                               </div>
                             </div>
                           </div>

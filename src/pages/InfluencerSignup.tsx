@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
-import { Instagram, Youtube, Music, Twitter, Facebook, Users, Star, TrendingUp, User, DollarSign, CheckCircle } from "lucide-react";
+import { Instagram, Youtube, Music, Twitter, Facebook, Users, Star, TrendingUp, User, DollarSign, CheckCircle, Upload, X, Image as ImageIcon, AlertCircle } from "lucide-react";
 import analyticsExample from "@/assets/analytics engagement.jpg";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -582,11 +582,118 @@ const InfluencerSignup = () => {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="engagement">Platform Engagement Screenshots (Images) *</Label>
-                      <Input id="engagement" type="file" accept="image/*" multiple className={`h-12 text-base ${errors.engagement ? 'border-destructive focus-visible:ring-destructive' : ''}`} onChange={(e) => handleInputChange("engagementScreenshots", e.target.files ? Array.from(e.target.files) : [])} />
-                      {formData.engagementScreenshots?.length ? (
-                        <p className="text-xs text-muted-foreground">Selected: {formData.engagementScreenshots.length} file(s)</p>
-                      ) : null}
-                      {errors.engagement && <p className="text-destructive text-sm">{errors.engagement}</p>}
+                      
+                      {/* File Input with Better UX */}
+                      <div className="space-y-3">
+                        <div className="relative">
+                          <input
+                            id="engagement"
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            className="hidden"
+                            onChange={(e) => {
+                              const files = e.target.files ? Array.from(e.target.files) : [];
+                              handleInputChange("engagementScreenshots", files);
+                            }}
+                          />
+                          <label htmlFor="engagement">
+                            <div 
+                              className={`flex items-center gap-3 p-3 border-2 border-dashed rounded-lg cursor-pointer transition-colors ${
+                                errors.engagement
+                                  ? 'border-destructive bg-destructive/5'
+                                  : 'border-border bg-card hover:border-primary/50 hover:bg-primary/5'
+                              }`}
+                              onDragOver={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                e.currentTarget.classList.add('border-primary', 'bg-primary/10');
+                              }}
+                              onDragLeave={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                e.currentTarget.classList.remove('border-primary', 'bg-primary/10');
+                              }}
+                              onDrop={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                e.currentTarget.classList.remove('border-primary', 'bg-primary/10');
+                                const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
+                                if (files.length > 0) {
+                                  handleInputChange("engagementScreenshots", files);
+                                }
+                              }}
+                            >
+                              <div className="flex-shrink-0">
+                                <Upload className="w-5 h-5 text-muted-foreground" />
+                              </div>
+                              <div className="flex-1">
+                                <p className="text-sm font-medium">
+                                  {formData.engagementScreenshots?.length 
+                                    ? `${formData.engagementScreenshots.length} file${formData.engagementScreenshots.length > 1 ? 's' : ''} selected`
+                                    : 'Click to choose files or drag and drop'}
+                                </p>
+                                <p className="text-xs text-muted-foreground">JPG, PNG, GIF (Max 10MB per file)</p>
+                              </div>
+                              <Button type="button" variant="outline" size="sm" className="flex-shrink-0">
+                                {formData.engagementScreenshots?.length ? 'Change' : 'Browse'}
+                              </Button>
+                            </div>
+                          </label>
+                        </div>
+
+                        {/* File Previews */}
+                        {formData.engagementScreenshots && formData.engagementScreenshots.length > 0 && (
+                          <div className="space-y-2">
+                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                              {formData.engagementScreenshots.map((file, index) => (
+                                <div key={index} className="relative group border border-border rounded-lg overflow-hidden bg-card">
+                                  <div className="aspect-square">
+                                    <img
+                                      src={URL.createObjectURL(file)}
+                                      alt={`Preview ${index + 1}`}
+                                      className="w-full h-full object-cover"
+                                    />
+                                  </div>
+                                  <button
+                                    type="button"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      const newFiles = formData.engagementScreenshots.filter((_, i) => i !== index);
+                                      handleInputChange("engagementScreenshots", newFiles);
+                                    }}
+                                    className="absolute top-1 right-1 w-6 h-6 bg-destructive text-destructive-foreground rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                                  >
+                                    <X className="w-3 h-3" />
+                                  </button>
+                                  <div className="absolute bottom-0 left-0 right-0 bg-black/70 text-white text-xs p-1.5 truncate">
+                                    {file.name}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                            <p className="text-xs text-muted-foreground">
+                              {formData.engagementScreenshots.length} file{formData.engagementScreenshots.length > 1 ? 's' : ''} ready to upload
+                            </p>
+                          </div>
+                        )}
+
+                        {/* Error Message */}
+                        {errors.engagement && (
+                          <div className="flex items-center gap-2 text-destructive text-sm">
+                            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                            <span>{errors.engagement}</span>
+                          </div>
+                        )}
+
+                        {/* Helper Text */}
+                        {!formData.engagementScreenshots?.length && !errors.engagement && (
+                          <p className="text-xs text-muted-foreground flex items-center gap-1">
+                            <AlertCircle className="w-3 h-3" />
+                            At least 1 screenshot is required
+                          </p>
+                        )}
+                      </div>
                     </div>
                     <div className="flex items-start space-x-2">
                       <Checkbox
