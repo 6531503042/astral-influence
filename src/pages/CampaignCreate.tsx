@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Target, DollarSign, Calendar, Users, Zap, CheckCircle, Sparkles, Globe, Clock, Star } from "lucide-react";
+import { Target, DollarSign, Calendar, Users, Zap, CheckCircle, Sparkles, Globe, Clock, Star, Instagram, Youtube, Music, Twitter, Facebook, Briefcase, Gamepad2, Heart, Dumbbell, Coffee, MapPin, Laptop, Shirt } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
@@ -45,23 +45,23 @@ const steps = [
 ];
 
 const platforms = [
-  { name: "Instagram", icon: "📸", color: "from-pink-500 to-purple-500" },
-  { name: "YouTube", icon: "📺", color: "from-red-500 to-red-600" },
-  { name: "TikTok", icon: "🎵", color: "from-black to-gray-800" },
-  { name: "Twitter", icon: "🐦", color: "from-blue-400 to-blue-500" },
-  { name: "Facebook", icon: "👥", color: "from-blue-600 to-blue-700" },
-  { name: "LinkedIn", icon: "💼", color: "from-blue-700 to-blue-800" }
+  { name: "Instagram", icon: Instagram, color: "from-pink-500 to-purple-500" },
+  { name: "YouTube", icon: Youtube, color: "from-red-500 to-red-600" },
+  { name: "TikTok", icon: Music, color: "from-black to-gray-800" },
+  { name: "Twitter", icon: Twitter, color: "from-blue-400 to-blue-500" },
+  { name: "Facebook", icon: Facebook, color: "from-blue-600 to-blue-700" },
+  { name: "LinkedIn", icon: Briefcase, color: "from-blue-700 to-blue-800" }
 ];
 
 const niches = [
-  { name: "Gaming", icon: "🎮", color: "from-purple-500 to-indigo-500" },
-  { name: "Beauty", icon: "💄", color: "from-pink-400 to-rose-500" },
-  { name: "Fitness", icon: "💪", color: "from-green-500 to-teal-500" },
-  { name: "Food", icon: "🍕", color: "from-orange-500 to-yellow-500" },
-  { name: "Travel", icon: "✈️", color: "from-cyan-500 to-blue-500" },
-  { name: "Tech", icon: "💻", color: "from-gray-600 to-gray-700" },
-  { name: "Fashion", icon: "👗", color: "from-purple-400 to-pink-400" },
-  { name: "Lifestyle", icon: "🌟", color: "from-yellow-400 to-orange-400" }
+  { name: "Gaming", icon: Gamepad2, color: "from-purple-500 to-indigo-500" },
+  { name: "Beauty", icon: Heart, color: "from-pink-400 to-rose-500" },
+  { name: "Fitness", icon: Dumbbell, color: "from-green-500 to-teal-500" },
+  { name: "Food", icon: Coffee, color: "from-orange-500 to-yellow-500" },
+  { name: "Travel", icon: MapPin, color: "from-cyan-500 to-blue-500" },
+  { name: "Tech", icon: Laptop, color: "from-gray-600 to-gray-700" },
+  { name: "Fashion", icon: Shirt, color: "from-purple-400 to-pink-400" },
+  { name: "Lifestyle", icon: Sparkles, color: "from-yellow-400 to-orange-400" }
 ];
 
 export default function CampaignCreate() {
@@ -269,28 +269,31 @@ export default function CampaignCreate() {
 
                   <div className="space-y-3">
                     <Label>Target Platforms *</Label>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                      {platforms.map((platform) => (
-                        <div 
-                          key={platform.name} 
-                          className={`relative p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 hover:scale-105 ${
-                            selectedPlatforms.includes(platform.name)
-                              ? `border-primary bg-gradient-to-r ${platform.color} text-white shadow-lg`
-                              : 'border-border bg-card hover:border-primary/50'
-                          }`}
-                          onClick={() => handlePlatformToggle(platform.name)}
-                        >
-                          <div className="flex items-center gap-3">
-                            <span className="text-2xl">{platform.icon}</span>
-                            <span className="font-medium">{platform.name}</span>
-                          </div>
-                          {selectedPlatforms.includes(platform.name) && (
-                            <div className="absolute top-2 right-2">
-                              <CheckCircle className="w-5 h-5 text-white" />
-                            </div>
-                          )}
-                        </div>
-                      ))}
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                      {platforms.map((platform) => {
+                        const IconComponent = platform.icon;
+                        const isSelected = selectedPlatforms.includes(platform.name);
+                        return (
+                          <button
+                            key={platform.name}
+                            type="button"
+                            onClick={() => handlePlatformToggle(platform.name)}
+                            className={`relative flex items-center justify-center p-4 rounded-lg border-2 transition-all duration-200 hover:scale-105 ${
+                              isSelected
+                                ? "border-primary bg-primary/10 text-primary shadow-md"
+                                : "border-border bg-card text-foreground hover:border-primary/50 hover:bg-primary/5"
+                            }`}
+                          >
+                            <IconComponent className={`w-5 h-5 mr-2 ${isSelected ? 'text-primary' : 'text-muted-foreground'}`} />
+                            <span className="text-sm font-medium">{platform.name}</span>
+                            {isSelected && (
+                              <div className="absolute top-1 right-1">
+                                <CheckCircle className="w-4 h-4 text-primary" />
+                              </div>
+                            )}
+                          </button>
+                        );
+                      })}
                     </div>
                     {errors.platforms && <p className="text-destructive text-sm">{errors.platforms}</p>}
                     {selectedPlatforms.length > 0 && (
@@ -368,28 +371,31 @@ export default function CampaignCreate() {
 
                   <div className="space-y-3">
                     <Label>Target Niches *</Label>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      {niches.map((niche) => (
-                        <div 
-                          key={niche.name} 
-                          className={`relative p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 hover:scale-105 ${
-                            selectedNiches.includes(niche.name)
-                              ? `border-primary bg-gradient-to-r ${niche.color} text-white shadow-lg`
-                              : 'border-border bg-card hover:border-primary/50'
-                          }`}
-                          onClick={() => handleNicheToggle(niche.name)}
-                        >
-                          <div className="flex flex-col items-center gap-2 text-center">
-                            <span className="text-3xl">{niche.icon}</span>
-                            <span className="font-medium text-sm">{niche.name}</span>
-                          </div>
-                          {selectedNiches.includes(niche.name) && (
-                            <div className="absolute top-2 right-2">
-                              <CheckCircle className="w-5 h-5 text-white" />
-                            </div>
-                          )}
-                        </div>
-                      ))}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                      {niches.map((niche) => {
+                        const IconComponent = niche.icon;
+                        const isSelected = selectedNiches.includes(niche.name);
+                        return (
+                          <button
+                            key={niche.name}
+                            type="button"
+                            onClick={() => handleNicheToggle(niche.name)}
+                            className={`relative flex items-center justify-center p-4 rounded-lg border-2 transition-all duration-200 hover:scale-105 ${
+                              isSelected
+                                ? "border-primary bg-primary/10 text-primary shadow-md"
+                                : "border-border bg-card text-foreground hover:border-primary/50 hover:bg-primary/5"
+                            }`}
+                          >
+                            <IconComponent className={`w-5 h-5 mr-2 ${isSelected ? 'text-primary' : 'text-muted-foreground'}`} />
+                            <span className="text-sm font-medium">{niche.name}</span>
+                            {isSelected && (
+                              <div className="absolute top-1 right-1">
+                                <CheckCircle className="w-4 h-4 text-primary" />
+                              </div>
+                            )}
+                          </button>
+                        );
+                      })}
                     </div>
                     {selectedNiches.length > 0 && (
                       <div className="flex flex-wrap gap-2 mt-4">
